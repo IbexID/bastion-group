@@ -1,0 +1,25 @@
+.button {
+    cursor: pointer;
+    font-family: 'Fira Sans';
+    background-color: #C93E33;
+    border-radius: 4px;
+    border: none;
+    width: 240px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: 500;
+    line-height: 18px;
+    font-size: 15px;
+    padding: 12px 38px 12px 32px;
+    margin-bottom: 15px;
+    &__icon {
+        margin-right: 27px;
+    }
+    &--more{
+        background-color: #EFEFEF;
+        font-weight: 400;
+        color: black;
+    }
+}

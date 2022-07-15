@@ -1,0 +1,86 @@
+.cart {
+    &__item {
+        height: 170px;
+        display: flex;
+        align-items: center;
+        background-color: white;
+        border-top: 1px solid #e6e6e6;
+    }
+
+    &__item-img {
+        margin: 0 25px 0 21px;
+    }
+    &__item-description{
+        text-align: left;
+        flex-grow: 1;
+    }
+    &__item-gost {
+        color: #C93E33;
+        font-size: 10px;
+        line-height: 12px;
+        letter-spacing: 0.009em;
+        text-align: center;
+        background: rgba(201, 62, 51, .1);
+        border-radius: 2px;
+        padding: 4px 0;
+        margin-bottom: 10px;
+        max-width: 100px;
+    }
+    &__item-name{
+        font-size: 18px;
+        line-height: 21px;
+        letter-spacing: 0.009em;
+        font-weight: 400;
+        margin-bottom: 15px;
+    }
+    &__item-price{
+        font-weight: 700;
+        font-size: 15px;
+        line-height: 18px;
+        color: rgba(179, 179, 179, 1);
+        letter-spacing: 0.009em;
+    }
+    &__item-controls{
+        display: flex;
+        align-items: center;
+        margin-right: 40px;
+    }
+    &__item-incr,
+    &__item-decr{
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 35px;
+        padding: 10px;
+        background-color: transparent;
+        font-size: 15px;
+        line-height: 18px;
+        border: 1px solid rgba(230, 230, 230, 1)
+    }
+    &__item-quantity{
+        height: 35px;
+        padding: 6px 20px;
+        font-size: 18px;
+        line-height: 21px;
+        width: 52px;
+        border: none;
+        border-top: 1px solid rgba(230, 230, 230, 1);
+        border-bottom: 1px solid rgba(230, 230, 230, 1);
+    }
+    &__item-sum{
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 18px;
+        letter-spacing: 0.009em;
+        margin-right: 50px;
+    }
+    &__item-trash{
+        margin-right: 40px;
+        cursor: pointer;
+        opacity: 0.5;
+        &:hover{
+            opacity: 1;
+        }
+    }
+}

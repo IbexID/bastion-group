@@ -11,6 +11,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
 * {
   margin: 0;
   padding: 0;
@@ -35,10 +36,60 @@ img {
   display: block;
   max-width: 100%;
 }
-body{
+
+body {
   background-color: rgba(242, 242, 242, 1);
 }
-input{
+main{
+  padding: 0 165px;
+}
+
+input, button {
+  font-family: 'Fira Sans';
   outline: none;
 }
 
+.breadcrumbs {
+  padding-top: 19px;
+  margin-bottom: 15px;
+  display: flex;
+
+  &__text {
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 14px;
+    color: rgb(179, 179, 179)
+  }
+
+  &__text:first-of-type {
+    padding-right: 15px;
+
+  }
+
+  &__text:last-of-type {
+    padding-left: 15px;
+    font-weight: 500;
+    color: black;
+    
+  }
+  &__text--add{
+    position: relative;
+
+    &::before,
+    &::after {
+      position: absolute;
+      content: '';
+      width: 1px;
+      height: 4px;
+      background-color: rgb(179, 179, 179);
+      left: 0px;
+      top: 6px;
+      transform: rotate(45deg);
+    }
+
+    &::before {
+      top: 4px;
+      transform: rotate(-45deg);
+    }
+  }
+}
