@@ -110,6 +110,7 @@
     }
     &__email-address{        
         @include header-light-text();
+        color: rgba(51, 51, 51, 1);
     }
     &__bottom{
         background-color: white;
