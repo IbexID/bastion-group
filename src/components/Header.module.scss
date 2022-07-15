@@ -1,0 +1,194 @@
+@mixin header-light-text {
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 14px;
+}
+@mixin header-input-text {
+    font-family: 'Fira Sans';
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 18px;
+    color: rgba(179, 179, 179, 1);
+}
+@mixin header-regular-text {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+}
+@mixin header-button-text{
+    font-family: 'Fira Sans';
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 18px;
+    letter-spacing: 0.009em;
+    text-transform: uppercase;
+    color: white;
+}
+@mixin header-bold-text{
+    font-weight: 700;
+    line-height: 19px;
+    font-size: 16px;
+}
+
+.header {
+    &__top {
+        padding: 16px 165px;
+        background-color: rgba(242, 242, 242, 1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__nav-list {
+        display: flex;
+        @include header-light-text();
+    }
+
+    &__nav-item:first-of-type {
+        margin-right: 36px;
+    }
+
+    &__info {
+        display: flex;
+        align-items: center;
+    }
+    &__phone{
+        margin-right: 30px;
+        display: flex;
+        align-items: center;
+        
+    }
+    &__phone-icon{
+        height: 15px;
+        width: 15px;
+        margin-right: 11px;
+    }
+    &__phone-number{
+        @include header-bold-text();
+    }
+    &__city{
+        display: flex;
+        align-items: center;
+        margin-right: 30px;
+    }
+    &__city-icon{
+        width: 10px;
+        height: 14px;
+        margin-right: 12px;
+    }
+    &__city-name{
+        @include header-regular-text();
+        color: rgba(201, 62, 51, 1);
+        padding-right: 10px;
+        position: relative;
+        cursor: pointer;
+        &::before,
+        &::after{
+            position: absolute;
+            content: '';
+            right: -4px;
+            top: 4px;
+            background-color: rgba(201, 62, 51, 1);
+            width: 1px;
+            height: 5px;
+            transform: rotate(45deg);
+        }
+        &::after{
+            transform: rotate(-45deg);
+            right: -1px;
+        }
+
+    }
+    &__email{
+        display: flex;
+        align-items: center
+    }
+    &__email-icon{
+        width: 14px;
+        height: 11px;
+        margin-right: 11px;
+    }
+    &__email-address{        
+        @include header-light-text();
+    }
+    &__bottom{
+        background-color: white;
+        padding: 20px 165px;
+        display: flex;
+        align-items: center;
+    }
+    &__bottom-logo{
+        margin-right: 15px;
+    }
+    &__bottom-title{
+        width: 112px;
+        text-align: left;
+        margin-right: 3px;
+    }
+    &__bottom-button{
+        cursor: pointer;
+        width: 145px;
+        height: 42px;
+        padding: 12px 33px 12px 55px;
+        margin-right: 20px;
+        background-color: rgba(201, 62, 51, 1);
+        border: none;
+        border-radius: 4px;
+        @include header-button-text();
+        position: relative;
+    }
+    &__button-icon{
+        position: absolute;
+        left: 20px;
+    }
+    &__bottom-form{
+        flex-grow: 1;
+        height: 42px;
+        min-width: 546px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        margin-right: 42px;
+    }
+    &__form-input{
+        position: absolute;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        padding: 12px 0 12px 48px;
+        outline: none;
+        border: 1px solid rgba(230, 230, 230, 1);
+        border-radius: 4px;
+        @include header-input-text();
+        margin-right: 42px;
+    }
+    &__form-button{
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        right: 20px;
+        bottom: 11px;
+        background-color: transparent;
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }
+    &__bottom-favorite{
+        margin-right: 36px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    &__bottom-cart{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    &__bottom-text{
+        margin-top: 7px;
+        &:last-of-type{
+            margin-top: 5px;
+        }
+    }
+}
