@@ -1,0 +1,36 @@
+import React from 'react';
+import cl from './ItemCard.module.scss'
+import Button from './ui/Button';
+import CartControls from './ui/CartControls';
+
+interface ICardProps {
+    gost: string;
+    title: string;
+    price: number
+}
+
+const ItemCard: React.FC<ICardProps> = (props: ICardProps) => {
+    return (
+        <div className={cl.card}>
+            <div className={cl.card__categories}>
+                <p className={cl.card__hit}>хит</p>
+                <p className={cl.card__discount}>скидка</p>
+                <p className={cl.card__action}>акция</p>
+
+            </div>
+            <img className={cl.card__image} src={require('../images/cart-item.png')} alt="" />
+            <p className={cl.card__gost}>{props.gost}</p>
+            <h5 className={cl.card__title}>{props.title}</h5>
+            <div className={cl.card__price}>
+                <p className={cl['card__price-text']}>{props.price} руб.</p>
+                <div className={cl['card__controls-wrapper']}><CartControls /></div>
+            </div>
+            <div className={cl.card__buttons}>
+                <Button addToCard={true}/>
+                <Button moreInfo={true} />
+            </div>
+        </div>
+    );
+};
+
+export default ItemCard;

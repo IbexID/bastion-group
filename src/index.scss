@@ -55,6 +55,7 @@ input, button {
   display: flex;
 
   &__text {
+    text-align: left;
     font-size: 12px;
     font-weight: 300;
     line-height: 14px;
@@ -67,10 +68,11 @@ input, button {
   }
 
   &__text:last-of-type {
-    padding-left: 15px;
     font-weight: 500;
     color: black;
-    
+  }
+  &__text:last-of-type:not(:only-child){
+    padding-left: 15px;
   }
   &__text--add{
     position: relative;

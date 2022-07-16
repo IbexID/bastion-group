@@ -14,8 +14,12 @@
     font-size: 15px;
     padding: 12px 38px 12px 32px;
     margin-bottom: 15px;
+    position: relative;
     &__icon {
-        margin-right: 27px;
+        position: absolute;
+        left: 26px;
+        top: 50%;
+        transform: translateY(-50%);
     }
     &--more{
         background-color: #EFEFEF;

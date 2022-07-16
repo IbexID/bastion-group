@@ -1,5 +1,6 @@
 import React from 'react';
 import cl from './CartItem.module.scss'
+import CartControls from './ui/CartControls';
 const CartItem: React.FC = () => {
     return (
         <div className={cl.cart__item}>
@@ -10,9 +11,7 @@ const CartItem: React.FC = () => {
                 <p className={cl['cart__item-price']}>849.9 руб.</p>
             </div>
             <div className={cl['cart__item-controls']}>
-                <button className={cl['cart__item-incr']}>+</button>
-                <input value={1} className={cl['cart__item-quantity']} type="text" />
-                <button className={cl['cart__item-decr']}>-</button>
+                <CartControls />
             </div>
             <h4 className={cl['cart__item-sum']}>2 549.7 руб. </h4>
             <span className={cl['cart__item-trash']}>

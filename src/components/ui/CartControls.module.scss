@@ -1,0 +1,28 @@
+.cartcontrols {
+    display: flex;
+    align-items: center;
+    
+    &__incr,
+    &__decr{
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 35px;
+        padding: 10px;
+        background-color: transparent;
+        font-size: 15px;
+        line-height: 18px;
+        border: 1px solid rgba(230, 230, 230, 1)
+    }
+    &__quantity{
+        height: 35px;
+        padding: 6px 20px;
+        font-size: 18px;
+        line-height: 21px;
+        width: 52px;
+        border: none;
+        border-top: 1px solid rgba(230, 230, 230, 1);
+        border-bottom: 1px solid rgba(230, 230, 230, 1);
+    }
+}

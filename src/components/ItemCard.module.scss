@@ -1,0 +1,50 @@
+.card {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    width: 280px;
+    height: 411px;
+    padding: 0 20px;
+
+    &__categories {
+        display: flex;
+        gap: 5px;
+        text-transform: uppercase;
+        font-size: 10px;
+        line-height: 12px;
+        text-align: center;
+        letter-spacing: 0.009em;
+        margin: 15px 0;
+    }
+    &__hit,
+    &__discount,
+    &__action{
+        padding: 5px 15px;
+        height: 21px;
+        width: max-content;
+        border-radius: 50px;
+        background-color: rgba(253, 114, 114, 1);
+        color: white;
+        cursor: pointer;
+    }
+    &__discount{
+        background-color: rgba(230, 126, 34, 1);
+    }
+    &__action{
+        background-color: rgba(39, 174, 96, 1);
+    }
+    &__image{
+        width: 100%;
+        padding: 0 30px;
+        margin-bottom: 38px;
+    }
+    &__gost{
+        text-align: left;
+    }
+    &__title{
+        text-align: left;
+    }
+    &__price{
+        text-align: left;
+    }
+}

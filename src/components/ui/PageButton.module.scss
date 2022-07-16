@@ -1,0 +1,21 @@
+.pagebutton {
+    height: 35px;
+    cursor: pointer;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+    letter-spacing: 0.009em;
+    padding: 10px 15px;
+    background-color: white;
+    color: #B3B3B3;
+    border: 1px solid rgba(230, 230, 230, 1);
+    &--active{
+        color: black;
+    }
+    &--arrow{
+        padding: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
