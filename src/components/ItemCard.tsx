@@ -18,14 +18,14 @@ const ItemCard: React.FC<ICardProps> = (props: ICardProps) => {
                 <p className={cl.card__action}>акция</p>
 
             </div>
-            <img className={cl.card__image} src={require('../images/cart-item.png')} alt="" />
+            <img className={cl.card__image} src={require('../images/card-item.png')} alt="" />
             <p className={cl.card__gost}>{props.gost}</p>
             <h5 className={cl.card__title}>{props.title}</h5>
             <div className={cl.card__price}>
                 <p className={cl['card__price-text']}>{props.price} руб.</p>
-                <div className={cl['card__controls-wrapper']}><CartControls /></div>
+                <div className={cl['card__controls-wrapper'] + ' ' + cl.card__hidden}><CartControls /></div>
             </div>
-            <div className={cl.card__buttons}>
+            <div className={cl.card__buttons + ' ' + cl.card__hidden}>
                 <Button addToCard={true}/>
                 <Button moreInfo={true} />
             </div>

@@ -2,9 +2,15 @@
     background-color: white;
     display: flex;
     flex-direction: column;
-    width: 280px;
+    min-width: 280px;
     height: 411px;
     padding: 0 20px;
+    border-bottom: 1px solid #e6e6e6;
+    border-right: 1px solid #e6e6e6;
+
+    &__hidden {
+        display: none;
+    }
 
     &__categories {
         display: flex;
@@ -16,9 +22,10 @@
         letter-spacing: 0.009em;
         margin: 15px 0;
     }
+
     &__hit,
     &__discount,
-    &__action{
+    &__action {
         padding: 5px 15px;
         height: 21px;
         width: max-content;
@@ -27,24 +34,47 @@
         color: white;
         cursor: pointer;
     }
-    &__discount{
+
+    &__discount {
         background-color: rgba(230, 126, 34, 1);
     }
-    &__action{
+
+    &__action {
         background-color: rgba(39, 174, 96, 1);
     }
-    &__image{
-        width: 100%;
+
+    &__image {
+        margin: auto;
         padding: 0 30px;
         margin-bottom: 38px;
     }
-    &__gost{
+
+    &__gost {
         text-align: left;
+        color: #C93E33;
+        padding: 4px 10px;
+        width: max-content;
+        cursor: pointer;
+        font-size: 10px;
+        line-height: 12px;
+        background: rgba(201, 62, 51, 0.1);
+        border-radius: 2px;
+        margin-bottom: 29px;
     }
-    &__title{
+
+    &__title {
         text-align: left;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 22px;
+        margin-bottom: 9px;
     }
-    &__price{
+
+    &__price {
         text-align: left;
+        font-weight: 700;
+        font-size: 15px;
+        line-height: 18px;
+        margin-bottom: 30px;
     }
 }

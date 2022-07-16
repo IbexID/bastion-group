@@ -22,31 +22,31 @@ const Index: React.FC = () => {
             <div className={cl.index__main}>
                 <div className={cl['index__main-category']}>
                     <button className={cl['index__category-button']}>
-                        <img src={require('../images/icons/catalogue-red-icon.png')} alt="" />
+                        <img className={cl['index__category-img']} src={require('../images/icons/catalogue-red-icon.png')} alt="" />
                         Категории
                     </button>
                 </div>
                 <div className={cl['index__main-gost']}>
-                    <button className={cl['index__gost-button']}>ГОСТ 14911-82</button>
+                    <button className={cl['index__gost-button'] + ' ' + cl['index__gost-button--active']}>ГОСТ 14911-82</button>
                     <button className={cl['index__gost-button']}>ОСТ 36-146-88</button>
                 </div>
                 <div className={cl['index__main-settings']}>
                     <ul className={cl['index__settings-categories']}>
                         <li className={cl['index__categories-item']}>
                             <p className={cl['index__categories-series']}>Серия 5.904-1 выпуск 1: </p>
-                            <p className={cl['index__categories-name']}>Детали крепления воздуховодов</p>
+                            <p className={cl['index__categories-name']}>Детали крепления воздуховодов<span className={cl['index__categories-counter']}>95</span></p>
                         </li>
                         <li className={cl['index__categories-item']}>
                             <p className={cl['index__categories-series']}>Серия 5.904-1 выпуск 1: </p>
-                            <p className={cl['index__categories-name']}>Детали крепления воздуховодов</p>
+                            <p className={cl['index__categories-name']}>Детали крепления воздуховодов<span className={cl['index__categories-counter']}>15</span></p>
                         </li>
                         <li className={cl['index__categories-item']}>
                             <p className={cl['index__categories-series']}>Серия 5.904-1 выпуск 1: </p>
-                            <p className={cl['index__categories-name']}>Детали крепления воздуховодов</p>
+                            <p className={cl['index__categories-name']}>Детали крепления воздуховодов<span className={cl['index__categories-counter']}>247</span></p>
                         </li>
                         <li className={cl['index__categories-item']}>
                             <p className={cl['index__categories-series']}>Серия 5.904-1 выпуск 1: </p>
-                            <p className={cl['index__categories-name']}>Детали крепления воздуховодов</p>
+                            <p className={cl['index__categories-name']}>Детали крепления воздуховодов<span className={cl['index__categories-counter']}>2</span></p>
                         </li>
                     </ul>
                     <button className={cl['index__categories-button']}>Показать все</button>
@@ -59,21 +59,32 @@ const Index: React.FC = () => {
                             <h5 className={cl['index__filter-subtitle']}>Цена, руб.</h5>
 
                         </div>
-                        <h5 className={cl['index__filter-subtitle']}>Тип продукта<span className={cl['index__filter-question']}></span></h5>
-                        <h5 className={cl['index__filter-subtitle']}>Бренд<span className={cl['index__filter-question']}></span></h5>
-                        <label className={cl['index__filter-label']} htmlFor="custChoice">
-                            <input className={cl['index__filter-input']} type="checkbox" name="custChoice"/>
-                            Выбор покупателей
-                        </label>
-                        <label className={cl['index__filter-label'] + ' ' + cl['index__filter-label--active']} htmlFor="bestPrice">
-                            <input className={cl['index__filter-input'] + ' ' + cl['index__filter-inpit--active']} type="checkbox" name="bestPrice" defaultChecked/>
-                            Лучшая цена
-                        </label>
+                        <div className={cl['index__filter-type']}>
+                            <h5 className={cl['index__filter-subtitle']}>Тип продукта<span className={cl['index__filter-question']}></span></h5>
+                        </div>
+                        <div className={cl['index__filter-brand']}>
+                            <h5 className={cl['index__filter-subtitle']}>Бренд<span className={cl['index__filter-question']}></span></h5>
+                        </div>
+                        <div className={cl['index__filter-checkbox']}>
+                            <input className={cl['index__filter-input']} type="checkbox" id="custChoice" />
+                            <label className={cl['index__filter-label']} htmlFor="custChoice">
+                                Выбор покупателей
+                            </label>
+                        </div>
+                        <div className={cl['index__filter-checkbox']}>
+                            <input className={cl['index__filter-input'] + ' ' + cl['index__filter-inpit--active']} type="checkbox" id="bestPrice" defaultChecked />
+                            <label className={cl['index__filter-label'] + ' ' + cl['index__filter-label--active']} htmlFor="bestPrice">
+                                Лучшая цена
+                            </label>
+                        </div>
                         <button className={cl['index__filter-button']}>Сбросить фильтры</button>
                     </div>
                 </div>
                 <div className={cl['index__main-cards']}>
-                    <ItemCard gost='ГОСТ 14911-82' title='Опора тавровая хомутовая ТХ' price={849.9}/>
+                    <ItemCard gost='ГОСТ 14911-82' title='Опора тавровая хомутовая ТХ' price={849.9} />
+                    <ItemCard gost='ГОСТ 14911-82' title='Опора тавровая хомутовая ТХ' price={849.9} />
+                    <ItemCard gost='ГОСТ 14911-82' title='Опора тавровая хомутовая ТХ' price={849.9} />
+                    <ItemCard gost='ГОСТ 14911-82' title='Опора тавровая хомутовая ТХ' price={849.9} />
                 </div>
             </div>
             <div className={cl.index__pagination}>
