@@ -1,0 +1,50 @@
+.producttypes{
+    margin: 0px 0 107px;
+    padding: 0 165px;
+    &__title{
+        text-align: left;
+        margin-bottom: 40px;
+    }
+    &__form{
+        padding: 60px 100px;
+        background-color: white;
+        box-shadow: 0px 8px 8px rgb(0 0 0 / 10%);
+        border-radius: 8px;
+    }
+    &__form-title{
+        text-align: left;
+        margin-bottom: 20px;
+    }
+    &__inputs-wrapper{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+    &__form-label{
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 60%;
+    }
+    &__form-input{
+        border: none;
+        margin-left: 15px;
+        border-bottom: 1px solid #e6e6e6;
+        height: 35px;
+        min-width: 300px;
+    }
+    &__form-button{
+        padding: 12px 55px;
+        background-color: rgb(173, 5, 15);
+        border: none;
+        color: white;
+        font-weight: 500;
+        font-size: 17px;
+        line-height: 18px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+}

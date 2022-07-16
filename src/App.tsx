@@ -7,6 +7,7 @@ import Header from './components/Header';
 import CartControls from './components/ui/CartControls';
 import Cart from './pages/Cart';
 import Index from './pages/Index';
+import ProductTypes from './pages/ProductTypes';
 
 function App() {
   return (
@@ -14,7 +15,8 @@ function App() {
       <Header />
       <main>
         {/* <Cart /> */}
-        <Index />
+        <ProductTypes />
+        {/* <Index /> */}
       </main>
       <Footer />
     </div>
