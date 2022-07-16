@@ -30,6 +30,20 @@
         width: 60%;
         margin-bottom: 10px;
     }
+    &__form-select{
+        display: grid;
+        grid-template-areas: 'select';
+        appearance: none;
+        border: 1px solid #e6e6e6;
+        border-radius: 4px;
+        outline: none;
+        min-width: 300px;
+        padding-top: 10px;
+        cursor: pointer;
+        font-size: 18px;
+        padding: 5px 0 5px 15px;
+        
+    }
     &__form-input{
         border: none;
         margin-left: 15px;
@@ -47,5 +61,10 @@
         line-height: 18px;
         border-radius: 4px;
         cursor: pointer;
+    }
+    &__error{
+        color:rgb(173, 5, 15);
+        font-size: 18px;
+        margin: 20px 0;
     }
 }

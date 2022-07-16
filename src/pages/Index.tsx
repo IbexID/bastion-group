@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 /* import 'rc-slider/assets/index.css'; */
 import Slider from 'rc-slider';
 import Range  from 'rc-slider';
@@ -6,8 +6,16 @@ import Breadcrumbs from '../components/Breadcrumbs';
 import ItemCard from '../components/ItemCard';
 import PageButton from '../components/ui/PageButton';
 import cl from './Index.module.scss'
+import { useTypedSelector } from '../hooks/useTypedSelector';
+import { useActions } from '../hooks/useActions';
+import { removeState } from '../localStorage';
 
 const Index: React.FC = () => {
+    const {products, error} = useTypedSelector(state => state.products);
+    const {addProduct} = useActions();
+
+    
+
     return (
         <div className={cl.index}>
             <Breadcrumbs />
@@ -24,7 +32,7 @@ const Index: React.FC = () => {
             </div>
             <div className={cl.index__main}>
                 <div className={cl['index__main-category']}>
-                    <button className={cl['index__category-button']}>
+                    <button className={cl['index__category-button']} onClick={()=>window.localStorage.clear()}>
                         <img className={cl['index__category-img']} src={require('../images/icons/catalogue-red-icon.png')} alt="" />
                         Категории
                     </button>
@@ -93,10 +101,11 @@ const Index: React.FC = () => {
                     </div>
                 </div>
                 <div className={cl['index__main-cards']}>
-                    <ItemCard gost='ГОСТ 14911-82' title='Опора тавровая хомутовая ТХ' price={849.9} />
-                    <ItemCard gost='ГОСТ 14911-82' title='Опора тавровая хомутовая ТХ' price={849.9} />
-                    <ItemCard gost='ГОСТ 14911-82' title='Опора тавровая хомутовая ТХ' price={849.9} />
-                    <ItemCard gost='ГОСТ 14911-82' title='Опора тавровая хомутовая ТХ' price={849.9} />
+                    {products.map( (item, i) =>{
+                        return (
+                            <ItemCard key={i} title={item.productName} gost={item.productGost} price={item.productPrice} />
+                        )
+                    })}
                 </div>
             </div>
             <div className={cl.index__pagination}>

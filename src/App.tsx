@@ -1,4 +1,6 @@
 import React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
 import './App.css';
 import CartItem from './components/CartItem';
 import Feedback from './components/Feedback';
@@ -15,10 +17,14 @@ function App() {
     <div className="App">
       <Header />
       <main>
-        {/* <Cart /> */}
-        <Products />
-        {/* <ProductTypes /> */}
-        {/* <Index /> */}
+        <BrowserRouter basename='/' >
+          <Routes >
+            <Route path='/' element={<Index/>}/>
+            <Route path='/cart' element={<Cart/>}/>
+            <Route path='/producttypes' element={<ProductTypes/>}/>
+            <Route path='/products' element={<Products/>}/>
+          </Routes>
+        </BrowserRouter>
       </main>
       <Footer />
     </div>

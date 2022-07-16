@@ -8,10 +8,10 @@ const Header: React.FC = () => {
                 <nav className={cl.header__nav}>
                     <ul className={cl['header__nav-list']}>
                         <li className={cl['header__nav-item']}>
-                            <a href="#">Типы продуктов</a>
+                            <a href="/producttypes">Типы продуктов</a>
                         </li>
                         <li className={cl['header__nav-item']}>
-                            <a href="#">Продукты</a>
+                            <a href="/products">Продукты</a>
                         </li>
                     </ul>
                 </nav>
@@ -31,7 +31,7 @@ const Header: React.FC = () => {
                 </div>
             </div>
             <div className={cl.header__bottom}>
-                <img className={cl['header__bottom-logo']} src={require('../images/header__logo.png')} alt="" />
+                <a href='/'><img className={cl['header__bottom-logo']} src={require('../images/header__logo.png')} alt="" /></a>
                 <h5 className={cl['header__bottom-title']}>Производитель металлических изделий №1</h5>
                 <button className={cl['header__bottom-button']}>
                     <img className={cl['header__button-icon']} src={require('../images/icons/catalogue-icon.svg').default} alt="catalogue icon" />
@@ -45,8 +45,8 @@ const Header: React.FC = () => {
                     <a href='#'><p className={cl['header__bottom-text']}>Избранное</p></a>
                 </div>
                 <div className={cl['header__bottom-cart']}>
-                    <a href='#'><img src={require('../images/icons/cart-icon.svg').default} alt="cart icon" /></a>
-                    <a href='#'><p className={cl['header__bottom-text']}>Корзина</p></a>
+                    <a href='/cart'><img src={require('../images/icons/cart-icon.svg').default} alt="cart icon" /></a>
+                    <a href='/cart'><p className={cl['header__bottom-text']}>Корзина</p></a>
                 </div>
             </div>
         </header>
