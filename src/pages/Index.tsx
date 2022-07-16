@@ -1,4 +1,7 @@
 import React from 'react';
+/* import 'rc-slider/assets/index.css'; */
+import Slider from 'rc-slider';
+import Range  from 'rc-slider';
 import Breadcrumbs from '../components/Breadcrumbs';
 import ItemCard from '../components/ItemCard';
 import PageButton from '../components/ui/PageButton';
@@ -55,9 +58,18 @@ const Index: React.FC = () => {
                             <img src={require('../images/icons/filter-icon.png')} alt="" />
                             <h4 className={cl['index__filter-title']}>Фильтры</h4>
                         </div>
-                        <div className={cl['index__filter-price']}>
+                        <div className={cl['index__filter-price']+' '+cl['index__filter--exp']}>
                             <h5 className={cl['index__filter-subtitle']}>Цена, руб.</h5>
+                            <div className={cl['index__price-wrapper']}>
+                                <div className={cl['index__price-inputs']}>
+                                <p className={cl['index__price-from']}>от</p>
+                                <input className={cl['index__price-input']} type='text'/>
+                                <p className={cl['index__price-to']}>до</p>
+                                <input className={cl['index__price-input']} type='text'/>
+                                </div>
 
+                                <Slider range={true} max={1000} count={1} defaultValue={[0, 1000]}/>
+                                </div>
                         </div>
                         <div className={cl['index__filter-type']}>
                             <h5 className={cl['index__filter-subtitle']}>Тип продукта<span className={cl['index__filter-question']}></span></h5>
