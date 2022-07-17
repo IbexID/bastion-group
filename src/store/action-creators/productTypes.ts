@@ -1,5 +1,4 @@
 import { Dispatch } from 'react';
-import { ProductAction, ProductActionTypes } from '../../types/product';
 import { ProductTypeAction, ProductTypeActionTypes } from '../../types/productTypes';
 export const addProductType = (productTypeInfo: {}) => {
     return (dispatch: Dispatch<ProductTypeAction>) => {

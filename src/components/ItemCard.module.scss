@@ -8,10 +8,7 @@
     border-bottom: 1px solid #e6e6e6;
     border-right: 1px solid #e6e6e6;
 
-    &__hidden {
-        display: none;
-    }
-
+    
     &__categories {
         display: flex;
         gap: 5px;
@@ -67,7 +64,7 @@
         font-weight: 400;
         font-size: 18px;
         line-height: 22px;
-        margin-bottom: 9px;
+        margin-bottom: 15px;
     }
 
     &__price {
@@ -76,5 +73,20 @@
         font-size: 15px;
         line-height: 18px;
         margin-bottom: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between
     }
+    &__price-text{
+        font-weight: 700;
+        font-size: 15px;
+        line-height: 18px;
+    }
+    &__controls-wrapper{
+        display: block;
+    }
+    &__hidden {
+        display: none;
+    }
+
 }

@@ -35,8 +35,10 @@ const Index: React.FC = () => {
                     </button>
                 </div>
                 <div className={cl['index__main-gost']}>
-                    <button className={cl['index__gost-button'] + ' ' + cl['index__gost-button--active']}>ГОСТ 14911-82</button>
-                    <button className={cl['index__gost-button']}>ОСТ 36-146-88</button>
+                    {products.map( product =>
+                        <button key={product.productGost} className={cl['index__gost-button']}>{product.productGost}</button>
+                        )}
+                    
                 </div>
                 <div className={cl['index__main-settings']}>
                     <ul className={cl['index__settings-categories']}>
@@ -98,6 +100,7 @@ const Index: React.FC = () => {
                     </div>
                 </div>
                 <div className={cl['index__main-cards']}>
+                <ItemCard  title={'item.productName'} gost={'item.productGost'} price={245} />
                     {products.map( (item: any, i: number) =>{
                         return (
                             <ItemCard key={i} title={item.productName} gost={item.productGost} price={item.productPrice} />

@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import Breadcrumbs from '../components/Breadcrumbs';
 import { useActions } from '../hooks/useActions';
 import { useTypedSelector } from '../hooks/useTypedSelector';
-import { saveState } from '../localStorage';
 import { addProduct } from '../store/action-creators/product';
 import cl from './Products.module.scss'
 
@@ -11,15 +10,12 @@ const Products: React.FC = () => {
    
 
     const [isInputValid, setIsInputValid] = useState(false)
-    const [isIDValid, setIsIDValid] = useState(false)
-    const [isNameValid, setIsNameValid] = useState(false)
-    const [isTypeValid, setIsTypeValid] = useState(false)
-    const [isPriceValid, setIsPriceValid] = useState(false)
-    const [isGostValid, setIsGostValid] = useState(false)
     const [inputMessage, setInputMessage] = useState(false)
     const [message, setMessage] = useState('')
 
-    const { products } = useTypedSelector(state => state);
+    const { types } = useTypedSelector(state => state.types);
+    console.log(types);
+    
 
     const [productID, setProductID] = useState('')
     const [productName, setProductName] = useState('')
@@ -40,16 +36,10 @@ const Products: React.FC = () => {
         if(e.target.value==='' || /^\d+$/gi.test(e.target.value)){
             setProductID(e.target.value)
         }
-        if (e.target.value===''){
-            setIsIDValid(false)
-        }
     }
     const nameHandler = (e: React.ChangeEvent<HTMLInputElement>)=>{
         if(e.target.value==='' || /^[A-Za-zА-Яа-я0-9|-]*$/gi.test(e.target.value)){
             setProductName(e.target.value.trim())
-        }
-        if (e.target.value===''){
-            setIsNameValid(false)
         }
     }
     const typeHandler = (e: React.ChangeEvent<HTMLSelectElement>)=>{
@@ -61,21 +51,14 @@ const Products: React.FC = () => {
         if(e.target.value==='' || /^\d+(\.)*(\d?)$/.test(e.target.value)){
             setProductPrice(e.target.value)
         }
-        if (e.target.value===''){
-            setIsPriceValid(false)
-        }
     }
     const gostHandler = (e: React.ChangeEvent<HTMLInputElement>)=>{
         if(e.target.value==='' || /^[А-Яа-я0-9|\-|\s]*$/gi.test(e.target.value)){
             setProductGost(e.target.value.trim())
         }
-        if (e.target.value===''){
-            setIsGostValid(false)
-        }
     }
     const checkValid = () =>{
         const values = Object.values(productInfo)
-        console.log(values)
         setIsInputValid(values.every(value=>value!==''))
        
     }
@@ -100,7 +83,7 @@ const Products: React.FC = () => {
     }
     
     
-    const buttonHandler = async (e: React.MouseEvent<HTMLButtonElement>)=>{
+    const buttonHandler = (e: React.MouseEvent<HTMLButtonElement>)=>{
         e.preventDefault();
         checkValid()
         if (isInputValid){
@@ -152,8 +135,11 @@ const Products: React.FC = () => {
                             onChange={((e) => typeHandler(e))}
                         >
                             <option value="none" disabled >Выберите тип продукта</option>
-                            <option value="wallah" >wallah</option>
-                            <option value="cifir" >cifir</option>
+                            {types.map( (type, i) =>
+                                <option key={i} value={type.productTypeID} >{type.productTypeName}</option>
+                                )}
+                            {/* <option value="wallah" >wallah</option>
+                            <option value="cifir" >cifir</option> */}
                         </select>
                     </label>
                     <label className={cl['products__form-label']} htmlFor="">Цена

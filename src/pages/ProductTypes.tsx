@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Breadcrumbs from '../components/Breadcrumbs';
 import { useActions } from '../hooks/useActions';
 import { useTypedSelector } from '../hooks/useTypedSelector';
-import { saveState } from '../localStorage';
 import cl from './ProductTypes.module.scss'
 
 const ProductTypes: React.FC = () => {
@@ -10,9 +9,7 @@ const ProductTypes: React.FC = () => {
     const {addProductType} = useActions();
 
     const [isInputValid, setIsInputValid] = useState(false)
-    const [inputError, setInputError] = useState(false)
-    const [isIDValid, setIsIDValid] = useState(false)
-    const [isNameValid, setIsNameValid] = useState(false)
+    const [message, setMessage] = useState('')
     const [productTypeID, setProductTypeID] = useState('')
     const [productTypeName, setProductTypeName] = useState('')
 
@@ -24,26 +21,19 @@ const ProductTypes: React.FC = () => {
     const IDHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.value === '' || /^\d+$/gi.test(e.target.value)) {
             setProductTypeID(e.target.value)
-            setIsIDValid(true)
-        }
-        if (e.target.value === '') {
-            setIsIDValid(false)
         }
 
     }
     const nameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.value === '' || /^[A-Za-zА-Яа-я0-9|\-|\s]*$/gi.test(e.target.value)) {
+        if (e.target.value === '' || /^[A-Za-zА-Яа-я0-9|\-|\s]*$/gi.test(e.target.value) && /\D/gi.test(e.target.value)) {
             setProductTypeName(e.target.value.trim())
-            setIsNameValid(true)
-        }
-
-        if (e.target.value === '') {
-            setIsNameValid(false)
         }
     }
     const checkValid = () =>{
-        if (isIDValid && isNameValid){
+        if (productTypeID!=='' && productTypeID!==''){
             setIsInputValid(true)
+        } else{
+            setIsInputValid(false)
         }
     }
 
@@ -51,10 +41,10 @@ const ProductTypes: React.FC = () => {
         addProductType(productTypeInfo);
         
     }
-    const showError = () =>{
-        setInputError(true);
+    const showMessage = (message: string) =>{
+        setMessage(message);
         setTimeout(() => {
-            setInputError(false);
+            setMessage('');
         }, 1500);
     }
     const clearInputs = () =>{
@@ -62,9 +52,21 @@ const ProductTypes: React.FC = () => {
         setProductTypeID('')
         setProductTypeName('')
     }
+    const buttonHandler = (e: React.MouseEvent<HTMLButtonElement>)=>{
+        e.preventDefault();
+        checkValid()
+        if (isInputValid){
+            showMessage('Тип продукта успешно добавлен!')
+            addProductTypeInfo();
+            clearInputs();
+            setIsInputValid(false)
+        } else{
+            showMessage('Заполните все поля');
+        }
+    }
     useEffect(()=>{
-        saveState(types, 'types')
-    }, [types])
+        checkValid()
+    }, [productTypeInfo])
 
     return (
         <div className={cl.producttypes}>
@@ -73,11 +75,7 @@ const ProductTypes: React.FC = () => {
             <form className={cl.producttypes__form}
             onSubmit={((e)=>{
                 e.preventDefault();
-                checkValid();
-                if(isInputValid){
-
-                    addProductTypeInfo();
-                }
+                
             })}
             >
                 <h2 className={cl['producttypes__form-title']}>Добавить тип продукта</h2>
@@ -99,20 +97,13 @@ const ProductTypes: React.FC = () => {
                         />
                     </label>
                 </div>
-                {inputError &&
-                    <p className={cl.producttypes__error}>Заполните все поля</p>
+                {message &&
+                    <p className={cl.producttypes__message}>{message}</p>
                 }
                 <button 
                 className={cl['producttypes__form-button']}
                 onClick={(e) => {
-                    e.preventDefault();
-                    checkValid();
-                    if (!isInputValid) {
-                        showError();
-                        return
-                    } 
-                    addProductTypeInfo();
-                    clearInputs();
+                   buttonHandler(e)
                     
                 }
                 }

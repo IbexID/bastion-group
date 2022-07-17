@@ -10,8 +10,17 @@ interface ICardProps {
 }
 
 const ItemCard: React.FC<ICardProps> = (props: ICardProps) => {
+
+    const hoverHandler = (e: React.MouseEvent<HTMLDivElement>) =>{
+        const card = e.currentTarget;
+        e.stopPropagation()
+        const wrapper = card.querySelector('[class*=wrapper]')
+        wrapper!.classList.remove('ItemCard_card__hidden__BkTU+')
+        console.log(card.querySelectorAll('[class*=wrapper]'))
+    }
+
     return (
-        <div className={cl.card}>
+        <div className={cl.card} onMouseOver={(e)=>hoverHandler(e)}>
             <div className={cl.card__categories}>
                 <p className={cl.card__hit}>хит</p>
                 <p className={cl.card__discount}>скидка</p>
