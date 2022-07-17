@@ -1,6 +1,6 @@
 export interface ProductState{
+    
     products?: any;
-    types?: any;
 }
 export enum ProductActionTypes  {
     ADD_PRODUCT= "ADD_PRODUCT",

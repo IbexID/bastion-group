@@ -7,12 +7,10 @@ import ItemCard from '../components/ItemCard';
 import PageButton from '../components/ui/PageButton';
 import cl from './Index.module.scss'
 import { useTypedSelector } from '../hooks/useTypedSelector';
-import { useActions } from '../hooks/useActions';
-import { loadState } from '../localStorage';
 
 const Index: React.FC = () => {
-    const products = useTypedSelector(state => state.products);
-    console.log(loadState())
+    const products: any[] = useTypedSelector(state => Object.entries(state.products)[0][1]);
+    console.log(products)
     
 
     return (
@@ -100,11 +98,11 @@ const Index: React.FC = () => {
                     </div>
                 </div>
                 <div className={cl['index__main-cards']}>
-                    {/* {products.products.map( (item, i) =>{
+                    {products.map( (item: any, i: number) =>{
                         return (
                             <ItemCard key={i} title={item.productName} gost={item.productGost} price={item.productPrice} />
                         )
-                    })} */}
+                    })}
                 </div>
             </div>
             <div className={cl.index__pagination}>

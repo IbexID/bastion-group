@@ -10,6 +10,7 @@ const ProductTypes: React.FC = () => {
     const {addProductType} = useActions();
 
     const [isInputValid, setIsInputValid] = useState(false)
+    const [inputError, setInputError] = useState(false)
     const [isIDValid, setIsIDValid] = useState(false)
     const [isNameValid, setIsNameValid] = useState(false)
     const [productTypeID, setProductTypeID] = useState('')
@@ -50,6 +51,17 @@ const ProductTypes: React.FC = () => {
         addProductType(productTypeInfo);
         
     }
+    const showError = () =>{
+        setInputError(true);
+        setTimeout(() => {
+            setInputError(false);
+        }, 1500);
+    }
+    const clearInputs = () =>{
+        setIsInputValid(false);
+        setProductTypeID('')
+        setProductTypeName('')
+    }
     useEffect(()=>{
         saveState(types, 'types')
     }, [types])
@@ -61,7 +73,11 @@ const ProductTypes: React.FC = () => {
             <form className={cl.producttypes__form}
             onSubmit={((e)=>{
                 e.preventDefault();
-                addProductTypeInfo();
+                checkValid();
+                if(isInputValid){
+
+                    addProductTypeInfo();
+                }
             })}
             >
                 <h2 className={cl['producttypes__form-title']}>Добавить тип продукта</h2>
@@ -83,7 +99,24 @@ const ProductTypes: React.FC = () => {
                         />
                     </label>
                 </div>
-                <button className={cl['producttypes__form-button']}>Добавить</button>
+                {inputError &&
+                    <p className={cl.producttypes__error}>Заполните все поля</p>
+                }
+                <button 
+                className={cl['producttypes__form-button']}
+                onClick={(e) => {
+                    e.preventDefault();
+                    checkValid();
+                    if (!isInputValid) {
+                        showError();
+                        return
+                    } 
+                    addProductTypeInfo();
+                    clearInputs();
+                    
+                }
+                }
+                >Добавить</button>
             </form>
         </div>
     );

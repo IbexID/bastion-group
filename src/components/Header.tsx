@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import cl from './Header.module.scss'
 
 const Header: React.FC = () => {
@@ -8,10 +9,10 @@ const Header: React.FC = () => {
                 <nav className={cl.header__nav}>
                     <ul className={cl['header__nav-list']}>
                         <li className={cl['header__nav-item']}>
-                            <a href="/producttypes">Типы продуктов</a>
+                            <Link to="producttypes">Типы продуктов</Link>
                         </li>
                         <li className={cl['header__nav-item']}>
-                            <a href="/products">Продукты</a>
+                            <Link to="products">Продукты</Link>
                         </li>
                     </ul>
                 </nav>
@@ -31,7 +32,7 @@ const Header: React.FC = () => {
                 </div>
             </div>
             <div className={cl.header__bottom}>
-                <a href='/'><img className={cl['header__bottom-logo']} src={require('../images/header__logo.png')} alt="" /></a>
+                <Link to='/'><img className={cl['header__bottom-logo']} src={require('../images/header__logo.png')} alt="" /></Link>
                 <h5 className={cl['header__bottom-title']}>Производитель металлических изделий №1</h5>
                 <button className={cl['header__bottom-button']}>
                     <img className={cl['header__button-icon']} src={require('../images/icons/catalogue-icon.svg').default} alt="catalogue icon" />
@@ -45,8 +46,8 @@ const Header: React.FC = () => {
                     <a href='#'><p className={cl['header__bottom-text']}>Избранное</p></a>
                 </div>
                 <div className={cl['header__bottom-cart']}>
-                    <a href='/cart'><img src={require('../images/icons/cart-icon.svg').default} alt="cart icon" /></a>
-                    <a href='/cart'><p className={cl['header__bottom-text']}>Корзина</p></a>
+                    <Link to="cart"><img src={require('../images/icons/cart-icon.svg').default} alt="cart icon" /></Link>
+                    <Link to="cart"><p className={cl['header__bottom-text']}>Корзина</p></Link>
                 </div>
             </div>
         </header>

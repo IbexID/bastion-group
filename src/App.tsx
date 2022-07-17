@@ -12,21 +12,23 @@ import Products from './pages/Products';
 import ProductTypes from './pages/ProductTypes';
 
 function App() {
-  
+
   return (
     <div className="App">
-      <Header />
-      <main>
-        <BrowserRouter basename='/' >
+      <BrowserRouter  >
+        <Header />
+        <main>
+
           <Routes >
-            <Route path='/' element={<Index/>}/>
-            <Route path='/cart' element={<Cart/>}/>
-            <Route path='/producttypes' element={<ProductTypes/>}/>
-            <Route path='/products' element={<Products/>}/>
+            <Route path='/' element={<Index />} />
+            <Route path='cart' element={<Cart />} />
+            <Route path='producttypes' element={<ProductTypes />} />
+            <Route path='products' element={<Products />} />
           </Routes>
-        </BrowserRouter>
-      </main>
-      <Footer />
+
+        </main>
+        <Footer />
+      </BrowserRouter>
     </div>
   );
 }

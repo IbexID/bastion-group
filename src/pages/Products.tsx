@@ -16,7 +16,8 @@ const Products: React.FC = () => {
     const [isTypeValid, setIsTypeValid] = useState(false)
     const [isPriceValid, setIsPriceValid] = useState(false)
     const [isGostValid, setIsGostValid] = useState(false)
-    const [inputError, setInputError] = useState(false)
+    const [inputMessage, setInputMessage] = useState(false)
+    const [message, setMessage] = useState('')
 
     const { products } = useTypedSelector(state => state);
 
@@ -38,7 +39,6 @@ const Products: React.FC = () => {
     const IDHandler = (e: React.ChangeEvent<HTMLInputElement>)=>{
         if(e.target.value==='' || /^\d+$/gi.test(e.target.value)){
             setProductID(e.target.value)
-            setIsIDValid(true)
         }
         if (e.target.value===''){
             setIsIDValid(false)
@@ -47,7 +47,6 @@ const Products: React.FC = () => {
     const nameHandler = (e: React.ChangeEvent<HTMLInputElement>)=>{
         if(e.target.value==='' || /^[A-Za-zА-Яа-я0-9|-]*$/gi.test(e.target.value)){
             setProductName(e.target.value.trim())
-            setIsNameValid(true)
         }
         if (e.target.value===''){
             setIsNameValid(false)
@@ -55,14 +54,12 @@ const Products: React.FC = () => {
     }
     const typeHandler = (e: React.ChangeEvent<HTMLSelectElement>)=>{
         if(e.target.value!=='null'){
-            setIsTypeValid(true);
             setProductType(e.target.value);
         } 
     }
     const priceHandler = (e: React.ChangeEvent<HTMLInputElement>)=>{
         if(e.target.value==='' || /^\d+(\.)*(\d?)$/.test(e.target.value)){
             setProductPrice(e.target.value)
-            setIsPriceValid(true)
         }
         if (e.target.value===''){
             setIsPriceValid(false)
@@ -71,51 +68,63 @@ const Products: React.FC = () => {
     const gostHandler = (e: React.ChangeEvent<HTMLInputElement>)=>{
         if(e.target.value==='' || /^[А-Яа-я0-9|\-|\s]*$/gi.test(e.target.value)){
             setProductGost(e.target.value.trim())
-            setIsGostValid(true)
         }
         if (e.target.value===''){
             setIsGostValid(false)
         }
     }
     const checkValid = () =>{
-        if(isGostValid && isIDValid && isNameValid && isPriceValid && isTypeValid){
-            setIsInputValid(true);
-            setInputError(false)
-        }
+        const values = Object.values(productInfo)
+        console.log(values)
+        setIsInputValid(values.every(value=>value!==''))
+       
     }
     const clearInputs = () =>{
         setProductGost('');
         setProductID('');
         setProductName('');
-        setProductType('');
         setProductPrice('');
         setProductImage('');
     }
     const addProductInfo = (): void => {
+        setInputMessage(false)
         addProduct(productInfo)
-        console.log(products)
     }
-    const showError = () =>{
-        console.log(isIDValid)
-        setInputError(true);
+    const showMessage = (message: string) =>{
+        setInputMessage(true); 
+        setMessage(message) ;
         setTimeout(() => {
-            setInputError(false);
+            setMessage('') ;
+            setInputMessage(false);
         }, 1500);
     }
+    
+    
+    const buttonHandler = async (e: React.MouseEvent<HTMLButtonElement>)=>{
+        e.preventDefault();
+        checkValid()
+        if (isInputValid){
+            showMessage('Продукт успешно добавлен!')
+            addProductInfo();
+            clearInputs();
+            setIsInputValid(false)
+        } else{
+            showMessage('Заполните все поля');
+        }
+    }
+    
+    
     useEffect(()=>{
         checkValid();
-    }, [isGostValid, isIDValid, isNameValid, isTypeValid, isPriceValid])
-
-    useEffect(()=>{
-        saveState(products, 'products')
-    }, [products])
+    }, [productInfo ])
+   
 
     return (
         <div className={cl.products}>
             <Breadcrumbs page='Продукты' />
             <h1 className={cl.products__title}>Продукты</h1>
             <form className={cl.products__form} onSubmit={(e) => e.preventDefault()}>
-                <h2 className={cl['products__form-title']}>Добавить тип продукта</h2>
+                <h2 className={cl['products__form-title']}>Добавить продукт</h2>
                 <div className={cl['products__inputs-wrapper']}>
                     
                     <label className={cl['products__form-label']} htmlFor="">Идентификатор продукта
@@ -164,20 +173,12 @@ const Products: React.FC = () => {
                         />
                     </label>
                 </div>
-                {inputError &&
-                    <p className={cl.products__error}>Заполните все поля</p>
+                
+                {message &&
+                    <p className={cl.products__message}>{message}</p>
                 }
                 <button type='submit' onClick={(e) => {
-                    e.preventDefault();
-                    checkValid();
-                    console.log(isInputValid)
-                    if (!isInputValid) {
-                        showError();
-                        return
-                    } 
-                    addProductInfo();
-                    clearInputs();
-                    
+                    buttonHandler(e);
                 }
                 } className={cl['products__form-button']}>Добавить</button>
             </form>
