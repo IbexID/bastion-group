@@ -5,6 +5,11 @@ import App from './App';
 import Footer from './components/Footer';
 import { Provider } from 'react-redux';
 import { store } from './store';
+import { saveState } from './localStorage';
+
+store.subscribe(() => {
+  saveState(store.getState())
+})
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -12,5 +17,5 @@ const root = ReactDOM.createRoot(
 root.render(
   <Provider store={store}>
     <App />
-    </Provider>
+  </Provider>
 );

@@ -1,16 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { productReducer } from './reducers/product'
 
-import {saveState} from '../localStorage';
+import { productTypeReducer } from './reducers/productTypes';
+import { rootReducer } from './reducers';
+
 
 
 export const store = configureStore({
     reducer:{
         products: productReducer,
-       
+        types: productTypeReducer
     },
 })
 
-store.subscribe(()=>{
-    saveState(store.getState())
-})
+
+

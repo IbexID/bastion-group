@@ -3,10 +3,12 @@ import React, { useEffect, useState } from 'react';
 import Breadcrumbs from '../components/Breadcrumbs';
 import { useActions } from '../hooks/useActions';
 import { useTypedSelector } from '../hooks/useTypedSelector';
+import { saveState } from '../localStorage';
 import { addProduct } from '../store/action-creators/product';
 import cl from './Products.module.scss'
 
 const Products: React.FC = () => {
+   
 
     const [isInputValid, setIsInputValid] = useState(false)
     const [isIDValid, setIsIDValid] = useState(false)
@@ -16,7 +18,7 @@ const Products: React.FC = () => {
     const [isGostValid, setIsGostValid] = useState(false)
     const [inputError, setInputError] = useState(false)
 
-    const { products } = useTypedSelector(state => state.products);
+    const { products } = useTypedSelector(state => state);
 
     const [productID, setProductID] = useState('')
     const [productName, setProductName] = useState('')
@@ -43,8 +45,8 @@ const Products: React.FC = () => {
         }
     }
     const nameHandler = (e: React.ChangeEvent<HTMLInputElement>)=>{
-        if(e.target.value==='' || /[A-Za-zА-Яа-я0-9]/gi.test(e.target.value)){
-            setProductName(e.target.value)
+        if(e.target.value==='' || /^[A-Za-zА-Яа-я0-9|-]*$/gi.test(e.target.value)){
+            setProductName(e.target.value.trim())
             setIsNameValid(true)
         }
         if (e.target.value===''){
@@ -67,8 +69,8 @@ const Products: React.FC = () => {
         }
     }
     const gostHandler = (e: React.ChangeEvent<HTMLInputElement>)=>{
-        if(e.target.value==='' || /[А-Яа-я0-9]/gi.test(e.target.value)){
-            setProductGost(e.target.value)
+        if(e.target.value==='' || /^[А-Яа-я0-9|\-|\s]*$/gi.test(e.target.value)){
+            setProductGost(e.target.value.trim())
             setIsGostValid(true)
         }
         if (e.target.value===''){
@@ -103,6 +105,10 @@ const Products: React.FC = () => {
     useEffect(()=>{
         checkValid();
     }, [isGostValid, isIDValid, isNameValid, isTypeValid, isPriceValid])
+
+    useEffect(()=>{
+        saveState(products, 'products')
+    }, [products])
 
     return (
         <div className={cl.products}>

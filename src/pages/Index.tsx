@@ -8,12 +8,11 @@ import PageButton from '../components/ui/PageButton';
 import cl from './Index.module.scss'
 import { useTypedSelector } from '../hooks/useTypedSelector';
 import { useActions } from '../hooks/useActions';
-import { removeState } from '../localStorage';
+import { loadState } from '../localStorage';
 
 const Index: React.FC = () => {
-    const {products, error} = useTypedSelector(state => state.products);
-    const {addProduct} = useActions();
-
+    const products = useTypedSelector(state => state.products);
+    console.log(loadState())
     
 
     return (
@@ -101,11 +100,11 @@ const Index: React.FC = () => {
                     </div>
                 </div>
                 <div className={cl['index__main-cards']}>
-                    {products.map( (item, i) =>{
+                    {/* {products.products.map( (item, i) =>{
                         return (
                             <ItemCard key={i} title={item.productName} gost={item.productGost} price={item.productPrice} />
                         )
-                    })}
+                    })} */}
                 </div>
             </div>
             <div className={cl.index__pagination}>
