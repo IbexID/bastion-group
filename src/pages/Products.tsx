@@ -38,8 +38,8 @@ const Products: React.FC = () => {
         }
     }
     const nameHandler = (e: React.ChangeEvent<HTMLInputElement>)=>{
-        if(e.target.value==='' || /^[A-Za-zА-Яа-я0-9|-]*$/gi.test(e.target.value)){
-            setProductName(e.target.value.trim())
+        if(e.target.value==='' || /^[А-Яа-я0-9|-]+(\s)?[А-Яа-я0-9|-]*?$/gi.test(e.target.value)){
+            setProductName(e.target.value)
         }
     }
     const typeHandler = (e: React.ChangeEvent<HTMLSelectElement>)=>{
@@ -115,6 +115,7 @@ const Products: React.FC = () => {
                             className={cl['products__form-input']}
                             type="text"
                             value={productID}
+                            placeholder='Введите номер'
                             onChange={(e) => {
                                 IDHandler(e)
                             }}

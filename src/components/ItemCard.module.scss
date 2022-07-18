@@ -3,11 +3,11 @@
     display: flex;
     flex-direction: column;
     min-width: 280px;
-    height: 411px;
+    max-height: 426px;
     padding: 0 20px;
     border-bottom: 1px solid #e6e6e6;
     border-right: 1px solid #e6e6e6;
-
+    overflow: hidden;
     
     &__categories {
         display: flex;
@@ -17,7 +17,7 @@
         line-height: 12px;
         text-align: center;
         letter-spacing: 0.009em;
-        margin: 15px 0;
+        margin-top: 15px;
     }
 
     &__hit,
@@ -82,11 +82,35 @@
         font-size: 15px;
         line-height: 18px;
     }
-    &__controls-wrapper{
-        display: block;
+    &__buttons{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        &:last-child{
+            margin-bottom: 30px;
+        }
     }
-    &__hidden {
-        display: none;
+     .card__controls-wrapper{
+        opacity: 0;
+        transition: opacity 0.2s ease;
     }
-
+    .card__buttons{
+        opacity: 0;
+        transition: opacity 0.2s ease;
+    }
+    &:hover{
+        transition: all 0.2s ease;
+        border-radius: 4px;
+        box-shadow: 0px 12px 12px 4px rgba(0, 0, 0, 0.1);
+        max-height: 545px;
+        margin-bottom: -119px;
+        z-index: 2;
+        float: left;
+    }
+    &:hover .card__controls-wrapper{
+        opacity: 1;
+    }
+    &:hover .card__buttons{
+        opacity: 1;
+    }
 }

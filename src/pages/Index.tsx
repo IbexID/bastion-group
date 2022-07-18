@@ -101,6 +101,14 @@ const Index: React.FC = () => {
                 </div>
                 <div className={cl['index__main-cards']}>
                 <ItemCard  title={'item.productName'} gost={'item.productGost'} price={245} />
+                <ItemCard  title={'item.productName'} gost={'item.productGost'} price={245} />
+                <ItemCard  title={'item.productName'} gost={'item.productGost'} price={245} />
+                <ItemCard  title={'item.productName'} gost={'item.productGost'} price={245} />
+                <ItemCard  title={'item.productName'} gost={'item.productGost'} price={245} />
+                <ItemCard  title={'опора'} gost={'item.productGost'} price={245} />
+                <ItemCard  title={'продукт'} gost={'item.productGost'} price={245} />
+                <ItemCard  title={'item.productName'} gost={'item.productGost'} price={245} />
+                <ItemCard  title={'item.productName'} gost={'item.productGost'} price={245} />
                     {products.map( (item: any, i: number) =>{
                         return (
                             <ItemCard key={i} title={item.productName} gost={item.productGost} price={item.productPrice} />
