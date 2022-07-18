@@ -12,7 +12,6 @@ interface ICardProps {
 const ItemCard: React.FC<ICardProps> = (props: ICardProps) => {
     const isHit = props.title.includes('о')
     const isAction = props.title.includes('а')
-    console.log(isHit)
     
 
     return (

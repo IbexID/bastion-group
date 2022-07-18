@@ -14,8 +14,8 @@ const ProductTypes: React.FC = () => {
     const [productTypeName, setProductTypeName] = useState('')
 
     let productTypeInfo = {
-        productTypeID,
-        productTypeName,
+        productTypeID: Number(productTypeID),
+        productTypeName: productTypeName.trim(),
     }
 
     const IDHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,8 +25,8 @@ const ProductTypes: React.FC = () => {
 
     }
     const nameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.value === '' || /^[A-Za-zА-Яа-я0-9|\-|\s]*$/gi.test(e.target.value) && /\D/gi.test(e.target.value)) {
-            setProductTypeName(e.target.value.trim())
+        if (e.target.value === '' || /^[А-Яа-я]+[А-Яа-яё0-9|\-|(\s)]*?$/gi.test(e.target.value)) {
+            setProductTypeName(e.target.value)
         }
     }
     const checkValid = () =>{
@@ -84,6 +84,7 @@ const ProductTypes: React.FC = () => {
                         <input
                             className={cl['producttypes__form-input']}
                             type="text"
+                            placeholder='Введите число'
                             value={productTypeID}
                             onChange={(e) => IDHandler(e)}
                         />
@@ -92,6 +93,7 @@ const ProductTypes: React.FC = () => {
                         <input
                             className={cl['producttypes__form-input']}
                             type="text"
+                            placeholder='Введите название'
                             value={productTypeName}
                             onChange={(e) => nameHandler(e)}
                         />

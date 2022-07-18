@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
-/* import 'rc-slider/assets/index.css'; */
+import React, { useEffect, useState } from 'react';
 import Slider from 'rc-slider';
-import Range  from 'rc-slider';
+import Range from 'rc-slider';
 import Breadcrumbs from '../components/Breadcrumbs';
 import ItemCard from '../components/ItemCard';
 import PageButton from '../components/ui/PageButton';
@@ -10,8 +9,21 @@ import { useTypedSelector } from '../hooks/useTypedSelector';
 
 const Index: React.FC = () => {
     const products: any[] = useTypedSelector(state => Object.entries(state.products)[0][1]);
-    console.log(products)
-    
+    const maxProductPrice = Math.max(...products.map(product => product.productPrice))
+    const [minPrice, setMinPrice] = useState(Math.min(...products.map(product => product.productPrice), 0))
+    const [maxPrice, setMaxPrice] = useState(Math.max(...products.map(product => product.productPrice), 100))
+    const [filteredProducts, setFilteredProducts] = useState(products)
+
+    const filterByGost = (e: React.MouseEvent<HTMLButtonElement>, currentProduct: any) => {
+
+        const target = e.target as HTMLButtonElement
+        target.classList.toggle(cl['index__gost-button--active'])
+        const filteredProductsByGost = filteredProducts.filter(product => product.productGost === currentProduct.productGost)
+        setFilteredProducts(filteredProductsByGost)
+    }
+    useEffect(()=>{
+        setFilteredProducts(products.filter( product => product.productPrice >= minPrice && product.productPrice <= maxPrice))
+    }, [maxPrice, minPrice])
 
     return (
         <div className={cl.index}>
@@ -29,16 +41,16 @@ const Index: React.FC = () => {
             </div>
             <div className={cl.index__main}>
                 <div className={cl['index__main-category']}>
-                    <button className={cl['index__category-button']} onClick={()=>window.localStorage.clear()}>
+                    <button className={cl['index__category-button']} >
                         <img className={cl['index__category-img']} src={require('../images/icons/catalogue-red-icon.png')} alt="" />
                         Категории
                     </button>
                 </div>
                 <div className={cl['index__main-gost']}>
-                    {products.map( product =>
-                        <button key={product.productGost} className={cl['index__gost-button']}>{product.productGost}</button>
-                        )}
-                    
+                    {products.map(product =>
+                        <button key={product.productGost} onClick={(e) => filterByGost(e, product)} className={cl['index__gost-button']}>{product.productGost}</button>
+                    )}
+
                 </div>
                 <div className={cl['index__main-settings']}>
                     <ul className={cl['index__settings-categories']}>
@@ -65,21 +77,39 @@ const Index: React.FC = () => {
                             <img src={require('../images/icons/filter-icon.png')} alt="" />
                             <h4 className={cl['index__filter-title']}>Фильтры</h4>
                         </div>
-                        <div className={cl['index__filter-price']+' '+cl['index__filter--exp']}>
+                        <div className={cl['index__filter-price'] + ' ' + cl['index__filter--exp']}>
                             <h5 className={cl['index__filter-subtitle']}>Цена, руб.</h5>
                             <div className={cl['index__price-wrapper']}>
                                 <div className={cl['index__price-inputs']}>
-                                <p className={cl['index__price-from']}>от</p>
-                                <input className={cl['index__price-input']} type='text'/>
-                                <p className={cl['index__price-to']}>до</p>
-                                <input className={cl['index__price-input']} type='text'/>
+                                    <p className={cl['index__price-from']}>от</p>
+                                    <input className={cl['index__price-input']} value={minPrice} onChange={(e)=>{
+                                        setMinPrice(Number(e.target.value))
+                                    }} type='text' />
+                                    <p className={cl['index__price-to']}>до</p>
+                                    <input className={cl['index__price-input']} value={maxPrice} onChange={(e)=>{
+                                        setMaxPrice(Number(e.target.value))
+                                    }}
+                                        type='text' />
                                 </div>
 
-                                <Slider range={true} max={1000} count={1} defaultValue={[0, 1000]}/>
-                                </div>
+                                <Slider range={true} max={maxProductPrice}
+                                    onChange={((e) => {
+                                        const min = Object.values(e)[0]
+                                        const max = Object.values(e)[1]
+                                        if (min < max) {
+                                            setMinPrice(min)
+                                            setMaxPrice(max)
+                                        } else {
+                                            setMinPrice(max)
+                                            setMaxPrice(min)
+                                        }
+                                    })}
+                                    count={1} defaultValue={[minPrice, maxPrice]} />
+                            </div>
                         </div>
                         <div className={cl['index__filter-type']}>
                             <h5 className={cl['index__filter-subtitle']}>Тип продукта<span className={cl['index__filter-question']}></span></h5>
+                            
                         </div>
                         <div className={cl['index__filter-brand']}>
                             <h5 className={cl['index__filter-subtitle']}>Бренд<span className={cl['index__filter-question']}></span></h5>
@@ -100,16 +130,7 @@ const Index: React.FC = () => {
                     </div>
                 </div>
                 <div className={cl['index__main-cards']}>
-                <ItemCard  title={'item.productName'} gost={'item.productGost'} price={245} />
-                <ItemCard  title={'item.productName'} gost={'item.productGost'} price={245} />
-                <ItemCard  title={'item.productName'} gost={'item.productGost'} price={245} />
-                <ItemCard  title={'item.productName'} gost={'item.productGost'} price={245} />
-                <ItemCard  title={'item.productName'} gost={'item.productGost'} price={245} />
-                <ItemCard  title={'опора'} gost={'item.productGost'} price={245} />
-                <ItemCard  title={'продукт'} gost={'item.productGost'} price={245} />
-                <ItemCard  title={'item.productName'} gost={'item.productGost'} price={245} />
-                <ItemCard  title={'item.productName'} gost={'item.productGost'} price={245} />
-                    {products.map( (item: any, i: number) =>{
+                    {filteredProducts.map((item: any, i: number) => {
                         return (
                             <ItemCard key={i} title={item.productName} gost={item.productGost} price={item.productPrice} />
                         )

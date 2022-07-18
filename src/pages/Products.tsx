@@ -14,7 +14,7 @@ const Products: React.FC = () => {
     const [message, setMessage] = useState('')
 
     const { types } = useTypedSelector(state => state.types);
-    console.log(types);
+    
     
 
     const [productID, setProductID] = useState('')
@@ -25,11 +25,11 @@ const Products: React.FC = () => {
     const [productImage, setProductImage] = useState('')
     const { addProduct } = useActions();
     let productInfo = {
-        productID,
-        productName,
+        productID: Number(productID),
+        productName: productName.trim(),
         productType,
-        productPrice,
-        productGost,
+        productPrice: Number(productPrice),
+        productGost: productGost.trim(),
     }
     
     const IDHandler = (e: React.ChangeEvent<HTMLInputElement>)=>{
@@ -38,7 +38,7 @@ const Products: React.FC = () => {
         }
     }
     const nameHandler = (e: React.ChangeEvent<HTMLInputElement>)=>{
-        if(e.target.value==='' || /^[А-Яа-я0-9|-]+(\s)?[А-Яа-я0-9|-]*?$/gi.test(e.target.value)){
+        if(e.target.value==='' || /^[А-Яа-я]+[А-Яа-яё0-9|\-|(\s)]*?$/gi.test(e.target.value)){
             setProductName(e.target.value)
         }
     }
@@ -115,7 +115,7 @@ const Products: React.FC = () => {
                             className={cl['products__form-input']}
                             type="text"
                             value={productID}
-                            placeholder='Введите номер'
+                            placeholder='Введите число'
                             onChange={(e) => {
                                 IDHandler(e)
                             }}
@@ -124,6 +124,7 @@ const Products: React.FC = () => {
                     <label className={cl['products__form-label']} htmlFor="">Название продукта
                         <input
                             className={cl['products__form-input']}
+                            placeholder='Введите название'
                             type="text"
                             value={productName}
                             onChange={(e) => { nameHandler(e) }}
@@ -147,6 +148,7 @@ const Products: React.FC = () => {
                         <input
                             className={cl['products__form-input']}
                             type="text"
+                            placeholder='Введите число'
                             value={productPrice}
                             onChange={(e) => { priceHandler(e) }}
                         />
@@ -155,6 +157,7 @@ const Products: React.FC = () => {
                         <input
                             className={cl['products__form-input']}
                             type="text"
+                            placeholder='Введите название ГОСТа'
                             value={productGost}
                             onChange={(e) => { gostHandler(e) }}
                         />

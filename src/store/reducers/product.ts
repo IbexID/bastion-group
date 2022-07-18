@@ -1,4 +1,4 @@
-import Products from "../../pages/Products";
+
 import { ProductState, ProductAction, ProductActionTypes } from "../../types/product";
 
 
