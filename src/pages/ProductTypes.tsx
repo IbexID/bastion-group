@@ -7,7 +7,8 @@ import cl from './ProductTypes.module.scss'
 const ProductTypes: React.FC = () => {
     const { types } = useTypedSelector(state => state);
     const {addProductType} = useActions();
-
+    const typeNames = types.types.map( item => item.productTypeName)
+    
     const [isInputValid, setIsInputValid] = useState(false)
     const [message, setMessage] = useState('')
     const [productTypeID, setProductTypeID] = useState('')
@@ -25,12 +26,13 @@ const ProductTypes: React.FC = () => {
 
     }
     const nameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        
         if (e.target.value === '' || /^[А-Яа-я]+[А-Яа-яё0-9|\-|(\s)]*?$/gi.test(e.target.value)) {
             setProductTypeName(e.target.value)
         }
     }
     const checkValid = () =>{
-        if (productTypeID!=='' && productTypeID!==''){
+        if (productTypeID!=='' && productTypeName!=='' && !typeNames.includes(productTypeName)){
             setIsInputValid(true)
         } else{
             setIsInputValid(false)
@@ -54,13 +56,18 @@ const ProductTypes: React.FC = () => {
     }
     const buttonHandler = (e: React.MouseEvent<HTMLButtonElement>)=>{
         e.preventDefault();
-        checkValid()
+        checkValid();
+        
         if (isInputValid){
+            
             showMessage('Тип продукта успешно добавлен!')
             addProductTypeInfo();
             clearInputs();
             setIsInputValid(false)
-        } else{
+        } else if(typeNames.includes(productTypeName)){
+            showMessage('Ошибка! Такой тип уже существует')
+            setIsInputValid(false)
+        } else {
             showMessage('Заполните все поля');
         }
     }

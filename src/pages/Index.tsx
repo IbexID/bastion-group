@@ -11,7 +11,7 @@ const Index: React.FC = () => {
     const products: any[] = useTypedSelector(state => Object.entries(state.products)[0][1]);
     const maxProductPrice = Math.max(...products.map(product => product.productPrice))
     const gost: string[] = [...products.map(product => product.productGost)]
-    const type: string[] = [...products.map(product => product.productType)]
+    const type: string[] = Array.from(new Set([...products.map(product => product.productType)]))
     const [minPrice, setMinPrice] = useState(Math.min(...products.map(product => product.productPrice), 0))
     const [maxPrice, setMaxPrice] = useState(Math.max(...products.map(product => product.productPrice), 1))
     const [gostFilter, setGostFilter] = useState<any[]>([])
@@ -45,7 +45,7 @@ const Index: React.FC = () => {
 
     useEffect(() => {
         filterProducts()
-        console.log(type)
+        console.log(Array.from(new Set(products.map(item=>item.productType))))
     }, [minPrice, maxPrice, gostFilter, typeFilter])
 
     return (
@@ -140,21 +140,21 @@ const Index: React.FC = () => {
                         </div>
                         <div className={cl['index__filter-type'] + ' ' + cl['index__filter--exp']}>
                             <h5 className={cl['index__filter-subtitle']}>Тип продукта<span className={cl['index__filter-question']}></span></h5>
-                            {products.map((product,i) =>
+                            {Array.from(new Set(products.map(prod=>prod.productType))).map((uniqueType,i) =>
 
                                 <div key={i} className={cl['index__type-checkbox']}>
                                     <input className={cl['index__type-input']} 
                                     type="checkbox" 
-                                    id={product.productType} 
-                                    value={product.productType}
+                                    id={uniqueType} 
+                                    value={uniqueType}
                                     onChange={(e)=>{
                                         typeFilter.includes(e.target.value)
-                                        ? setTypeFilter(typeFilter.filter(item => item !== product.productType))
-                                        : setTypeFilter([...typeFilter, product.productType])
+                                        ? setTypeFilter(typeFilter.filter(item => item !== uniqueType))
+                                        : setTypeFilter([...typeFilter, uniqueType])
                                     }}
                                     />
-                                    <label className={cl['index__type-label']} htmlFor={product.productType}>
-                                        {product.productType}
+                                    <label className={cl['index__type-label']} htmlFor={uniqueType}>
+                                        {uniqueType}
                                     </label>
                                 </div>
                             )}
