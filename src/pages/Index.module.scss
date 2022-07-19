@@ -270,7 +270,6 @@
             transform: rotate(45deg);
         }
     }
-
     &__filter--exp {
         &::after {
             transform: rotate(-135deg);
@@ -293,7 +292,16 @@
         border-bottom: 1px solid #e6e6e6;
         display: flex;
     }
+    &__type-checkbox{
+        text-align: left;
+        padding: 20px 0 0 20px;
+        display: flex;
+        &:first-of-type{
+            padding-top: 30px;
+        }
+    }
 
+    &__type-label,
     &__filter-label {
         display: flex;
         align-items: center;
@@ -301,7 +309,7 @@
 
 
     }
-
+    &__type-input,
     &__filter-input {
         margin-right: 20px;
         border: 1px solid #e6e6e6;
@@ -315,7 +323,7 @@
         background: none;
         transition: all 0.2s ease-in-out;
     }
-
+    &__type-input:hover,
     &__filter-input:hover {
         border: 1px solid rgba(0, 0, 0, 0.2);
 
@@ -330,7 +338,25 @@
             opacity: 0.5;
         }
     }
+    
+    &__type-input:checked,
+    &__type-input:checked:hover{
+        ~.index__type-label {
+            color: black;
+        }
 
+        &::after {
+            position: absolute;
+            content: '';
+            top: 3px;
+            left: 3px;
+            width: 12px;
+            height: 12px;
+            background-color: #C93E33;
+            border-radius: 1px;
+            opacity: 1;
+        }
+    }
     &__filter-input:checked,
     &__filter-input:checked:hover {
         ~.index__filter-label {

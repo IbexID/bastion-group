@@ -138,10 +138,9 @@ const Products: React.FC = () => {
                         >
                             <option value="none" disabled >Выберите тип продукта</option>
                             {types.map( (type, i) =>
-                                <option key={i} value={type.productTypeID} >{type.productTypeName}</option>
+                                <option key={i} value={type.productTypeName} >{type.productTypeName}</option>
                                 )}
-                            {/* <option value="wallah" >wallah</option>
-                            <option value="cifir" >cifir</option> */}
+                           
                         </select>
                     </label>
                     <label className={cl['products__form-label']} htmlFor="">Цена
