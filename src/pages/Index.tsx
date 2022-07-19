@@ -10,20 +10,32 @@ import { useTypedSelector } from '../hooks/useTypedSelector';
 const Index: React.FC = () => {
     const products: any[] = useTypedSelector(state => Object.entries(state.products)[0][1]);
     const maxProductPrice = Math.max(...products.map(product => product.productPrice))
+    const gost: string[] = [...products.map(product => product.productGost)]
     const [minPrice, setMinPrice] = useState(Math.min(...products.map(product => product.productPrice), 0))
-    const [maxPrice, setMaxPrice] = useState(Math.max(...products.map(product => product.productPrice), 100))
+    const [maxPrice, setMaxPrice] = useState(Math.max(...products.map(product => product.productPrice), 1))
+    const [gostFilter, setGostFilter] = useState<any[]>([])
+    const [type, setType] = useState([...products.map(product => product.productType)])
     const [filteredProducts, setFilteredProducts] = useState(products)
 
-    const filterByGost = (e: React.MouseEvent<HTMLButtonElement>, currentProduct: any) => {
 
-        const target = e.target as HTMLButtonElement
-        target.classList.toggle(cl['index__gost-button--active'])
-        const filteredProductsByGost = filteredProducts.filter(product => product.productGost === currentProduct.productGost)
-        setFilteredProducts(filteredProductsByGost)
+    const filterProducts = () => {
+        if (!gostFilter.length) {
+            setFilteredProducts(products.filter(product => {
+                return product.productPrice >= minPrice && product.productPrice <= maxPrice && gost.includes(product.productGost) && type.includes(product.productType)
+            }))
+        } else {
+            setFilteredProducts(products.filter(product => {
+                return product.productPrice >= minPrice && product.productPrice <= maxPrice && gostFilter.includes(product.productGost) && type.includes(product.productType)
+            }))
+        }
+
     }
-    useEffect(()=>{
-        setFilteredProducts(products.filter( product => product.productPrice >= minPrice && product.productPrice <= maxPrice))
-    }, [maxPrice, minPrice])
+
+
+    useEffect(() => {
+        filterProducts()
+        console.log(gostFilter)
+    }, [minPrice, maxPrice, gostFilter])
 
     return (
         <div className={cl.index}>
@@ -48,7 +60,16 @@ const Index: React.FC = () => {
                 </div>
                 <div className={cl['index__main-gost']}>
                     {products.map(product =>
-                        <button key={product.productGost} onClick={(e) => filterByGost(e, product)} className={cl['index__gost-button']}>{product.productGost}</button>
+                        <button key={product.productGost} onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                            const button = e.target as HTMLButtonElement
+                            button.classList.toggle(cl['index__gost-button--active'])
+                            gostFilter.includes(product.productGost)
+                                ? setGostFilter(gostFilter.filter(item => item !== product.
+                                    productGost))
+                                : setGostFilter([...gostFilter, product.productGost])
+
+
+                        }} className={cl['index__gost-button']}>{product.productGost}</button>
                     )}
 
                 </div>
@@ -82,11 +103,11 @@ const Index: React.FC = () => {
                             <div className={cl['index__price-wrapper']}>
                                 <div className={cl['index__price-inputs']}>
                                     <p className={cl['index__price-from']}>от</p>
-                                    <input className={cl['index__price-input']} value={minPrice} onChange={(e)=>{
+                                    <input className={cl['index__price-input']} value={minPrice} onChange={(e) => {
                                         setMinPrice(Number(e.target.value))
                                     }} type='text' />
                                     <p className={cl['index__price-to']}>до</p>
-                                    <input className={cl['index__price-input']} value={maxPrice} onChange={(e)=>{
+                                    <input className={cl['index__price-input']} value={maxPrice} onChange={(e) => {
                                         setMaxPrice(Number(e.target.value))
                                     }}
                                         type='text' />
@@ -111,6 +132,12 @@ const Index: React.FC = () => {
                             <h5 className={cl['index__filter-subtitle']}>Тип продукта<span className={cl['index__filter-question']}></span></h5>
                             
                         </div>
+                        <div className={cl['index__filter-checkbox']}>
+                                <input className={cl['index__filter-input']} type="checkbox" id="custChoice" />
+                                <label className={cl['index__filter-label']} htmlFor="custChoice">
+                                    Выбор покупателей
+                                </label>
+                            </div>
                         <div className={cl['index__filter-brand']}>
                             <h5 className={cl['index__filter-subtitle']}>Бренд<span className={cl['index__filter-question']}></span></h5>
                         </div>
