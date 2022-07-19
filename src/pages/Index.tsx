@@ -136,6 +136,15 @@ const Index: React.FC = () => {
                                         }
                                     })}
                                     count={1} defaultValue={[minPrice, maxPrice]} />
+                                    <div className={cl['index__slider-marks']}>
+                                        <div className={cl['index__slider-mark']}></div>
+                                        <div className={cl['index__slider-mark']+' '+cl['index__slider-mark--big']}></div>
+                                        <div className={cl['index__slider-mark']}></div>
+                                        <div className={cl['index__slider-mark']+' '+cl['index__slider-mark--big']}></div>
+                                        <div className={cl['index__slider-mark']}></div>
+                                        <div className={cl['index__slider-mark']+' '+cl['index__slider-mark--big']}></div>
+                                        <div className={cl['index__slider-mark']}></div>
+                                    </div>
                             </div>
                         </div>
                         <div className={cl['index__filter-type'] + ' ' + cl['index__filter--exp']}>

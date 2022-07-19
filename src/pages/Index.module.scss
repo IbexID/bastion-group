@@ -205,6 +205,27 @@
     &__price-wrapper {
         padding-left: 20px;
         padding-right: 20px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    &__slider-marks{
+        position: absolute;
+        top: 103px;
+        height: 8px;
+        width: 171px;
+        display: flex;
+        justify-content: space-between;
+        
+    }
+    &__slider-mark{
+        background-color: #e6e6e6;
+        height: 5px;
+        width: 2px;
+    }
+    &__slider-mark--big{
+        height: 8px;
     }
 
     &__price-inputs {
