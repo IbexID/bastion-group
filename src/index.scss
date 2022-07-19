@@ -49,6 +49,15 @@ input, button {
   font-family: 'Fira Sans';
   outline: none;
 }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
 
 .breadcrumbs {
   padding-top: 19px;

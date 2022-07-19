@@ -185,6 +185,24 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        position: relative;
+    }
+    &__cart-counter{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        height: 13px;
+        width: 13px;
+        top: -3px;
+        right: 18px;
+        font-size: 8px;
+        line-height: 10px;
+        font-weight: 600;
+        color: #efefef;
+        border: 2px solid rgba(255, 255, 255, 1);
+        border-radius: 50%;
+        background-color: #C93E33;
     }
     &__bottom-text{
         margin-top: 7px;

@@ -100,7 +100,7 @@ const ProductTypes: React.FC = () => {
                         <input
                             className={cl['producttypes__form-input']}
                             type="text"
-                            placeholder='Введите название'
+                            placeholder='Введите название (на русском языке)'
                             value={productTypeName}
                             onChange={(e) => nameHandler(e)}
                         />

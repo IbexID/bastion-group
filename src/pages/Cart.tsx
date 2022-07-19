@@ -2,9 +2,20 @@ import React from 'react';
 import Breadcrumbs from '../components/Breadcrumbs';
 import CartItem from '../components/CartItem';
 import Button from '../components/ui/Button';
+import { useActions } from '../hooks/useActions';
+import { useTypedSelector } from '../hooks/useTypedSelector';
+import { CartState } from '../types/cart';
 import cl from './Cart.module.scss'
 
-const Cart: React.FC = (props) => {
+
+
+const Cart: React.FC = () => {
+
+    const {cart} = useTypedSelector(state => state.cart);
+    console.log(cart);
+    
+    /* const currentCart = Array.from(cart) */
+    
     return (
         <div className={cl.cart}>
             <Breadcrumbs page='Корзина' />
@@ -14,11 +25,16 @@ const Cart: React.FC = (props) => {
                     <span><img className={cl['cart__warning-img']} src={require('../images/icons/warning.png')} alt="warning" /></span><p>Извините, но указанное  ранее количество товара недоступно. Установлено ближайшее доступное значение.</p></div>
                 <h3 className={cl['cart__subtitle']}>Заказ</h3>
                 <div className={cl.cart__items}>
-                    <CartItem />
-                    <CartItem />
-                    <CartItem />
-                    <CartItem />
-                    <CartItem />
+                    {cart && cart.map((cartItem: any)=>{
+                        
+                        return <CartItem 
+                        gost={cartItem.productGost} 
+                        name={cartItem.productName}
+                        qty={cartItem.productQty}
+                        price={cartItem.productPrice}
+                        key={cartItem.productID}
+                        />
+                    })}
                 </div>
                 <form className={cl.cart__order}>
                     <p className={cl['cart__order-text']}>Контактная информация</p>
@@ -43,7 +59,7 @@ const Cart: React.FC = (props) => {
                         <h3>Итого</h3>
                         <p>8 499 руб.</p>
                     </div>
-                    <Button />
+                    <Button  />
                     <a className={cl.cart__download} href='#' download={true}>
                         <img src={require('../images/icons/download-document.png')} alt="" />
                         Коммерческое предложение

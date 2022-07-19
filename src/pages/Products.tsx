@@ -30,6 +30,7 @@ const Products: React.FC = () => {
         productType,
         productPrice: Number(productPrice),
         productGost: productGost.trim(),
+        productQty: 1
     }
     
     const IDHandler = (e: React.ChangeEvent<HTMLInputElement>)=>{
@@ -124,7 +125,7 @@ const Products: React.FC = () => {
                     <label className={cl['products__form-label']} htmlFor="">Название продукта
                         <input
                             className={cl['products__form-input']}
-                            placeholder='Введите название'
+                            placeholder='Введите название (на русском языке)'
                             type="text"
                             value={productName}
                             onChange={(e) => { nameHandler(e) }}

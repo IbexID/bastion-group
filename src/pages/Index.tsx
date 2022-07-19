@@ -6,6 +6,7 @@ import ItemCard from '../components/ItemCard';
 import PageButton from '../components/ui/PageButton';
 import cl from './Index.module.scss'
 import { useTypedSelector } from '../hooks/useTypedSelector';
+import { useActions } from '../hooks/useActions';
 
 const Index: React.FC = () => {
     const products: any[] = useTypedSelector(state => Object.entries(state.products)[0][1]);
@@ -17,23 +18,31 @@ const Index: React.FC = () => {
     const [gostFilter, setGostFilter] = useState<any[]>([])
     const [typeFilter, setTypeFilter] = useState<any[]>([])
     const [filteredProducts, setFilteredProducts] = useState(products)
-
-
+    const { addProductToCart, quantityUp, quantityDown } = useActions();
+    
+    
+    const qtyInCart = useTypedSelector(state => state.cart.cart.map((item: any) => item.productQty)) || 0
+    console.log(qtyInCart);
+    
+    const addToCart = (item: object) => {
+        addProductToCart(item)
+    }
+   
     const filterProducts = () => {
         if (!gostFilter.length && !typeFilter.length) {
             setFilteredProducts(products.filter(product => {
                 return product.productPrice >= minPrice && product.productPrice <= maxPrice && gost.includes(product.productGost) && type.includes(product.productType)
             }))
-        } else if(!gostFilter.length && typeFilter.length){
+        } else if (!gostFilter.length && typeFilter.length) {
             setFilteredProducts(products.filter(product => {
                 return product.productPrice >= minPrice && product.productPrice <= maxPrice && gost.includes(product.productGost) && typeFilter.includes(product.productType)
             }))
-        
-        } else if (gostFilter.length && !typeFilter.length){
+
+        } else if (gostFilter.length && !typeFilter.length) {
             setFilteredProducts(products.filter(product => {
                 return product.productPrice >= minPrice && product.productPrice <= maxPrice && gostFilter.includes(product.productGost) && type.includes(product.productType)
             }))
-        
+
         } else {
             setFilteredProducts(products.filter(product => {
                 return product.productPrice >= minPrice && product.productPrice <= maxPrice && gostFilter.includes(product.productGost) && typeFilter.includes(product.productType)
@@ -43,16 +52,16 @@ const Index: React.FC = () => {
     }
 
 
+
     useEffect(() => {
         filterProducts()
-        console.log(Array.from(new Set(products.map(item=>item.productType))))
     }, [minPrice, maxPrice, gostFilter, typeFilter])
 
     return (
         <div className={cl.index}>
             <Breadcrumbs />
             <div className={cl.index__top}>
-                <h1 className={cl.index__title}>Главная</h1>
+                <h1 className={cl.index__title} >Главная</h1>
                 <div className={cl.index__sort}>
                     <p className={cl['index__sort-text']}>Сначала популярные</p>
                     <img className={cl['index__sort-direction']} src={require('../images/icons/sort-icon.png')} alt="" />
@@ -136,38 +145,38 @@ const Index: React.FC = () => {
                                         }
                                     })}
                                     count={1} defaultValue={[minPrice, maxPrice]} />
-                                    <div className={cl['index__slider-marks']}>
-                                        <div className={cl['index__slider-mark']}></div>
-                                        <div className={cl['index__slider-mark']+' '+cl['index__slider-mark--big']}></div>
-                                        <div className={cl['index__slider-mark']}></div>
-                                        <div className={cl['index__slider-mark']+' '+cl['index__slider-mark--big']}></div>
-                                        <div className={cl['index__slider-mark']}></div>
-                                        <div className={cl['index__slider-mark']+' '+cl['index__slider-mark--big']}></div>
-                                        <div className={cl['index__slider-mark']}></div>
-                                    </div>
+                                <div className={cl['index__slider-marks']}>
+                                    <div className={cl['index__slider-mark']}></div>
+                                    <div className={cl['index__slider-mark'] + ' ' + cl['index__slider-mark--big']}></div>
+                                    <div className={cl['index__slider-mark']}></div>
+                                    <div className={cl['index__slider-mark'] + ' ' + cl['index__slider-mark--big']}></div>
+                                    <div className={cl['index__slider-mark']}></div>
+                                    <div className={cl['index__slider-mark'] + ' ' + cl['index__slider-mark--big']}></div>
+                                    <div className={cl['index__slider-mark']}></div>
+                                </div>
                             </div>
                         </div>
                         <div className={cl['index__filter-type'] + ' ' + cl['index__filter--exp']}>
                             <h5 className={cl['index__filter-subtitle']}>Тип продукта<span className={cl['index__filter-question']}></span></h5>
-                            {Array.from(new Set(products.map(prod=>prod.productType))).map((uniqueType,i) =>
+                            {Array.from(new Set(products.map(prod => prod.productType))).map((uniqueType, i) =>
 
                                 <div key={i} className={cl['index__type-checkbox']}>
-                                    <input className={cl['index__type-input']} 
-                                    type="checkbox" 
-                                    id={uniqueType} 
-                                    value={uniqueType}
-                                    onChange={(e)=>{
-                                        typeFilter.includes(e.target.value)
-                                        ? setTypeFilter(typeFilter.filter(item => item !== uniqueType))
-                                        : setTypeFilter([...typeFilter, uniqueType])
-                                    }}
+                                    <input className={cl['index__type-input']}
+                                        type="checkbox"
+                                        id={uniqueType}
+                                        value={uniqueType}
+                                        onChange={(e) => {
+                                            typeFilter.includes(e.target.value)
+                                                ? setTypeFilter(typeFilter.filter(item => item !== uniqueType))
+                                                : setTypeFilter([...typeFilter, uniqueType])
+                                        }}
                                     />
                                     <label className={cl['index__type-label']} htmlFor={uniqueType}>
                                         {uniqueType}
                                     </label>
                                 </div>
                             )}
-                            
+
                         </div>
 
                         <div className={cl['index__filter-brand']}>
@@ -190,8 +199,18 @@ const Index: React.FC = () => {
                 </div>
                 <div className={cl['index__main-cards']}>
                     {filteredProducts.map((item: any, i: number) => {
+                        
                         return (
-                            <ItemCard key={i} title={item.productName} gost={item.productGost} price={item.productPrice} />
+                            <ItemCard 
+                            item={item}
+                            key={i} 
+                            title={item.productName} 
+                            gost={item.productGost} 
+                            add={()=>addToCart(item)} 
+                            qtyUp={quantityUp} 
+                            productID={item.productID}  
+                            price={item.productPrice} />
+
                         )
                     })}
                 </div>

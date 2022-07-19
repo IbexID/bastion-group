@@ -1,17 +1,25 @@
-import React, { ButtonHTMLAttributes } from 'react';
+import React, { ButtonHTMLAttributes, MouseEventHandler } from 'react';
 import cl from './Button.module.scss'
 
 
 interface IButtonProps {
-    children?: any;
-    addToCard?: boolean;
+    cart?: boolean;
     moreInfo?: boolean;
+    qtyInCart?: any;
+    add?: MouseEventHandler<HTMLButtonElement> | undefined
+    addMore?: MouseEventHandler<HTMLButtonElement> | undefined
+    qtyUp?: MouseEventHandler<HTMLButtonElement> 
+    onClick?: Function
 }
 
 const Button: React.FC<IButtonProps> = (props: IButtonProps) => {
 
-    return props.addToCard
-        ? <button className={cl.button}>
+    return props.cart
+        ? <button className={cl.button}
+        onClick={
+            
+            props.add}
+        >
             <span>
                 <img className={cl.button__icon} src={require('../../images/icons/cart-add-icon.svg').default} alt='' ></img>
             </span>
