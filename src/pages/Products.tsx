@@ -1,4 +1,4 @@
-import { read } from 'fs';
+import { read, ReadStream } from 'fs';
 import React, { useEffect, useState } from 'react';
 import Breadcrumbs from '../components/Breadcrumbs';
 import { useActions } from '../hooks/useActions';
@@ -7,101 +7,103 @@ import { addProduct } from '../store/action-creators/product';
 import cl from './Products.module.scss'
 
 const Products: React.FC = () => {
-   
+
 
     const [isInputValid, setIsInputValid] = useState(false)
     const [inputMessage, setInputMessage] = useState(false)
     const [message, setMessage] = useState('')
 
     const { types } = useTypedSelector(state => state.types);
-    
-    
+
+
 
     const [productID, setProductID] = useState('')
     const [productName, setProductName] = useState('')
     const [productType, setProductType] = useState('')
     const [productPrice, setProductPrice] = useState('')
     const [productGost, setProductGost] = useState('')
-    const [productImage, setProductImage] = useState('')
+    const [productImage, setProductImage] = React.useState<File>()
     const { addProduct } = useActions();
     let productInfo = {
         productID: Number(productID),
         productName: productName.trim(),
         productType,
+        productImage,
         productPrice: Number(productPrice),
         productGost: productGost.trim(),
         productQty: 1
     }
-    
-    const IDHandler = (e: React.ChangeEvent<HTMLInputElement>)=>{
-        if(e.target.value==='' || /^\d+$/gi.test(e.target.value)){
+
+    const IDHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.value === '' || /^\d+$/gi.test(e.target.value)) {
             setProductID(e.target.value)
         }
     }
-    const nameHandler = (e: React.ChangeEvent<HTMLInputElement>)=>{
-        if(e.target.value==='' || /^[А-Яа-я]+[А-Яа-яё0-9|\-|(\s)]*?$/gi.test(e.target.value)){
+    const nameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.value === '' || /^[А-Яа-я]+[А-Яа-яё0-9|\-|(\s)]*?$/gi.test(e.target.value)) {
             setProductName(e.target.value)
         }
     }
-    const typeHandler = (e: React.ChangeEvent<HTMLSelectElement>)=>{
-        if(e.target.value!=='null'){
+    const typeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        if (e.target.value !== 'null') {
             setProductType(e.target.value);
-        } 
+        }
     }
-    const priceHandler = (e: React.ChangeEvent<HTMLInputElement>)=>{
-        if(e.target.value==='' || /^\d+(\.)*(\d?)$/.test(e.target.value)){
+    const priceHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.value === '' || /^\d+(\.)*(\d?)$/.test(e.target.value)) {
             setProductPrice(e.target.value)
         }
     }
-    const gostHandler = (e: React.ChangeEvent<HTMLInputElement>)=>{
-        if(e.target.value==='' || /^[А-Яа-я0-9|\-|\s]*$/gi.test(e.target.value)){
+    const gostHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.value === '' || /^[А-Яа-я0-9|\-|\s]*$/gi.test(e.target.value)) {
             setProductGost(e.target.value.trim())
         }
     }
-    const checkValid = () =>{
+    const checkValid = () => {
         const values = Object.values(productInfo)
-        setIsInputValid(values.every(value=>value!==''))
-       
+        setIsInputValid(values.every(value => value !== ''))
+
     }
-    const clearInputs = () =>{
+    const clearInputs = () => {
         setProductGost('');
         setProductID('');
         setProductName('');
         setProductPrice('');
-        setProductImage('');
+        setProductImage(undefined);
     }
     const addProductInfo = (): void => {
         setInputMessage(false)
         addProduct(productInfo)
     }
-    const showMessage = (message: string) =>{
-        setInputMessage(true); 
-        setMessage(message) ;
+    const showMessage = (message: string) => {
+        setInputMessage(true);
+        setMessage(message);
         setTimeout(() => {
-            setMessage('') ;
+            setMessage('');
             setInputMessage(false);
         }, 1500);
     }
-    
-    
-    const buttonHandler = (e: React.MouseEvent<HTMLButtonElement>)=>{
+
+
+    const buttonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         checkValid()
-        if (isInputValid){
+        if (isInputValid) {
             showMessage('Продукт успешно добавлен!')
             addProductInfo();
             clearInputs();
             setIsInputValid(false)
-        } else{
+        } else {
             showMessage('Заполните все поля');
         }
     }
     
-    
-    useEffect(()=>{
+
+
+    useEffect(() => {
         checkValid();
-    }, [productInfo ])
-   
+    }, [productInfo])
+
 
     return (
         <div className={cl.products}>
@@ -110,11 +112,12 @@ const Products: React.FC = () => {
             <form className={cl.products__form} onSubmit={(e) => e.preventDefault()}>
                 <h2 className={cl['products__form-title']}>Добавить продукт</h2>
                 <div className={cl['products__inputs-wrapper']}>
-                    
+
                     <label className={cl['products__form-label']} htmlFor="">Идентификатор продукта
                         <input
                             className={cl['products__form-input']}
                             type="text"
+                            required
                             value={productID}
                             placeholder='Введите число'
                             onChange={(e) => {
@@ -124,6 +127,7 @@ const Products: React.FC = () => {
                     </label>
                     <label className={cl['products__form-label']} htmlFor="">Название продукта
                         <input
+                            required
                             className={cl['products__form-input']}
                             placeholder='Введите название (на русском языке)'
                             type="text"
@@ -134,18 +138,20 @@ const Products: React.FC = () => {
                     <label className={cl['products__form-label']} htmlFor="">Тип продукта
                         <select className={cl['products__form-select']}
 
+                            required
                             defaultValue={'none'}
                             onChange={((e) => typeHandler(e))}
                         >
                             <option value="none" disabled >Выберите тип продукта</option>
-                            {types.map( (type, i) =>
+                            {types.map((type, i) =>
                                 <option key={i} value={type.productTypeName} >{type.productTypeName}</option>
-                                )}
-                           
+                            )}
+
                         </select>
                     </label>
                     <label className={cl['products__form-label']} htmlFor="">Цена
                         <input
+                            required
                             className={cl['products__form-input']}
                             type="text"
                             placeholder='Введите число'
@@ -155,6 +161,7 @@ const Products: React.FC = () => {
                     </label>
                     <label className={cl['products__form-label']} htmlFor="">Гост
                         <input
+                            required
                             className={cl['products__form-input']}
                             type="text"
                             placeholder='Введите название ГОСТа'
@@ -162,8 +169,22 @@ const Products: React.FC = () => {
                             onChange={(e) => { gostHandler(e) }}
                         />
                     </label>
+                    <label className={cl['products__form-label']} htmlFor="">Фото
+                        <input
+                            className={cl['products__form-input']}
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => {
+                                e.preventDefault();
+                                const { files } = e.target;
+                                console.log(files![0]);
+                                
+                                
+                            }}
+                        />
+                    </label>
                 </div>
-                
+
                 {message &&
                     <p className={cl.products__message}>{message}</p>
                 }

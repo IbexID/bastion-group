@@ -22,7 +22,7 @@ const Index: React.FC = () => {
     
     
     const qtyInCart = useTypedSelector(state => state.cart.cart.map((item: any) => item.productQty)) || 0
-    console.log(qtyInCart);
+    
     
     const addToCart = (item: object) => {
         addProductToCart(item)
@@ -156,7 +156,7 @@ const Index: React.FC = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className={cl['index__filter-type'] + ' ' + cl['index__filter--exp']}>
+                        <div className={products.length ? cl['index__filter-type'] + ' ' + cl['index__filter--exp'] : cl['index__filter-type']}>
                             <h5 className={cl['index__filter-subtitle']}>Тип продукта<span className={cl['index__filter-question']}></span></h5>
                             {Array.from(new Set(products.map(prod => prod.productType))).map((uniqueType, i) =>
 

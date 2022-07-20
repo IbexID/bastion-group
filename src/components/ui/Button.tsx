@@ -16,9 +16,7 @@ const Button: React.FC<IButtonProps> = (props: IButtonProps) => {
 
     return props.cart
         ? <button className={cl.button}
-        onClick={
-            
-            props.add}
+        onClick={props.add}
         >
             <span>
                 <img className={cl.button__icon} src={require('../../images/icons/cart-add-icon.svg').default} alt='' ></img>

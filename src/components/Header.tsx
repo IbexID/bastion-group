@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTypedSelector } from '../hooks/useTypedSelector';
 import cl from './Header.module.scss'
 
 const Header: React.FC = () => {
 
-    const qtyInCart = useTypedSelector(state => state.cart.cart.map((item: any) => item.productQty))
+    const {cart} = useTypedSelector(state => state.cart)
+    const qtyInCart = cart.map(item=>item.productQty).reduce((a, b)=>a+b, 0)
+    useEffect(()=>{
+
+    }, [qtyInCart])
+    
     return (
         <header className={cl.header}>
             <div className={cl.header__top}>
@@ -51,7 +56,9 @@ const Header: React.FC = () => {
                 <div className={cl['header__bottom-cart']}>
                     <Link to="cart">
                         <img src={require('../images/icons/cart-icon.svg').default} alt="cart icon" />
-                        <span className={cl['header__cart-counter']}>{qtyInCart.length ? qtyInCart : 0}</span>
+                        <span className={cl['header__cart-counter']}>
+                            {qtyInCart}
+                            </span>
                         </Link>
                     <Link to="cart"><p className={cl['header__bottom-text']}>Корзина</p></Link>
                 </div>

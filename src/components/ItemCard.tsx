@@ -50,28 +50,37 @@ const ItemCard: React.FC<ICardProps> = (props: ICardProps) => {
                         <input
                             value={qtyValue}
                             onChange={((e) => {
+                                if(Number(e.target.value)>0){
                                 setQtyValue(Number(e.target.value))
+                                }
                             })}
                             className={cl['card__cartcontrols-quantity']}
                             type="number" />
 
                         <button
                             className={cl['card__cartcontrols-decr']}
-                            onClick={() => setQtyValue(val => val - 1)}
+                            onClick={() => {
+                                setQtyValue(val => val<2 ? val :  val - 1)}}
                         >-</button>
                     </div>
                 </div>
             </div>
             <div className={cl.card__buttons + ' ' + cl.card__hidden}>
                 {qtyInCart.includes(props.productID)
-                    ? <Button cart={true} qtyUp={()=>{}} add={() => {
-
-                        props.qtyUp(props.productID, qtyValue)
-
-                    }} />
-                    : <Button cart={true} add={()=>props.add(item)} qtyUp={props.qtyUp} qtyInCart={qtyInCart}/>
+                    ? <Button 
+                        cart={true} 
+                        add={() => {
+                            props.qtyUp(props.productID, qtyValue)
+                        }} />
+                        
+                    : <Button 
+                        cart={true} 
+                        add={()=>{
+                            props.add(item);
+                            props.qtyUp(props.productID, qtyValue-1)
+                        }} />
                 }
-                <Button moreInfo={true} qtyUp={()=>{}} />
+                <Button moreInfo={true} />
             </div>
         </div>
     );

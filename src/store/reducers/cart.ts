@@ -11,6 +11,22 @@ export const cartReducer = (state = initialState, action: CartAction): CartState
     switch (action.type) {
         case CartActionTypes.ADD_PRODUCT_TO_CART:
             return state.cart ? { cart: [...state.cart, action.payload] } : { cart: action.payload };
+        case CartActionTypes.REMOVE_PRODUCT_FROM_CART:
+            return state.cart ? {
+                cart: state.cart.filter((item: any) => {
+                    if (item.productID !== action.id) {
+                        return item
+                    }
+                })
+            }
+                : state
+        case CartActionTypes.CLEAR_CART:
+            return state.cart 
+            ? 
+            { 
+                cart: []
+            }
+                : state
         case CartActionTypes.QUANTITY_UP:
             return state.cart ? {
                 cart: state.cart.map((item: any) => {
@@ -37,7 +53,7 @@ export const cartReducer = (state = initialState, action: CartAction): CartState
                             productPrice: item.productPrice,
                             productGost: item.productGost,
                             productName: item.productName,
-                            productQty: item.productQty + action.down
+                            productQty: item.productQty - action.down
                         }
                         return newItem
                     }

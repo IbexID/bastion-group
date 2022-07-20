@@ -9,12 +9,18 @@ interface ICartItemProps {
     name: string;
     price: number;
     qty: number;
+    id: number;
+    qtyUp: any;
+    qtyDown: any;
+    remove: any;
 
 }
 
-const CartItem: React.FC<ICartItemProps> = ({gost, name, price, qty }) => {
-    
-    return (
+const CartItem: React.FC<ICartItemProps> = ({ id, gost, name, price, qty, qtyUp, qtyDown, remove }) => {
+
+    return qty===0
+    ? <></>
+    :(
         <div className={cl.cart__item}>
             <img className={cl['cart__item-img']} src={require('../images/cart-item.png')} alt="" />
             <div className={cl['cart__item-description']}>
@@ -23,14 +29,40 @@ const CartItem: React.FC<ICartItemProps> = ({gost, name, price, qty }) => {
                 <p className={cl['cart__item-price']}>{price} руб.</p>
             </div>
             <div className={cl['cart__item-controls']}>
-                <CartControls />
+                <button 
+                className={cl['cart__controls-incr']}
+                onClick={()=>{
+                    qtyUp(id, 1)
+                }}
+                >+</button>
+                <input value={qty} 
+                className={cl['cart__controls-qty']} 
+                onChange={((e)=>{
+                    const diff = Number(e.target.value) - qty;
+                    qtyUp(id, diff)
+                })}
+                type="text" />
+                <button 
+                className={cl['cart__controls-decr']}
+                onClick={()=>{
+                    if(qty!==1){
+
+                        qtyDown(id, 1)
+                    }
+                }}
+                >-</button>
             </div>
-            <h4 className={cl['cart__item-sum']}>{price*qty} руб. </h4>
-            <span className={cl['cart__item-trash']}>
+            <h4 className={cl['cart__item-sum']}>{price * qty} руб. </h4>
+            <span className={cl['cart__item-trash']}
+            onClick={()=>{
+                remove(id)
+            }}
+            >
                 <img src={require('../images/icons/trash.svg').default} alt="trash" />
             </span>
         </div>
-    );
+    )
+    ;
 };
 
 export default CartItem;
