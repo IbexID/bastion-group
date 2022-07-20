@@ -9,7 +9,8 @@ interface IButtonProps {
     add?: MouseEventHandler<HTMLButtonElement> | undefined
     addMore?: MouseEventHandler<HTMLButtonElement> | undefined
     qtyUp?: MouseEventHandler<HTMLButtonElement> 
-    onClick?: Function
+    onClick?: any
+    onSubmit?: any
 }
 
 const Button: React.FC<IButtonProps> = (props: IButtonProps) => {
@@ -27,7 +28,10 @@ const Button: React.FC<IButtonProps> = (props: IButtonProps) => {
             ? <button className={cl.button + ' ' + cl['button--more']}>
                 Подробнее
             </button>
-        : <button className={cl.button}>
+        : <button 
+        className={cl.button +' ' + cl['button--order']}
+        onSubmit={props.onClick}
+        >
             <span>
                 <img className={cl.button__icon} src={require('../../images/icons/cart-order-icon.svg').default} alt='' ></img>
             </span>

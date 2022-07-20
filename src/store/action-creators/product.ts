@@ -6,7 +6,7 @@ export const addProduct = (productInfo: {}) => {
             dispatch({ type: ProductActionTypes.ADD_PRODUCT_SUCCESS, payload: { ...productInfo } })
 
         } catch (e) {
-            dispatch({ type: ProductActionTypes.ADD_PRODUCT_ERROR, payload: 'Произошла ошибка' })
+            console.log(e);
         }
     }
 }

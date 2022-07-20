@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Breadcrumbs from '../components/Breadcrumbs';
 import CartItem from '../components/CartItem';
 import Button from '../components/ui/Button';
@@ -12,10 +12,63 @@ import cl from './Cart.module.scss'
 const Cart: React.FC = () => {
 
     const { cart } = useTypedSelector(state => state.cart);
-    const totalPrice = cart.map(item => item.productPrice * item.productQty).reduce((a, b) => a + b, 0) || 0
-    console.log(totalPrice);
-    const { quantityUp, quantityDown, removeProductFromCart, clearCart } = useActions()
+    const totalPrice = cart.map(item => item.productPrice * item.productQty).reduce((a, b) => a + b, 0) || 0;
+    const { quantityUp, quantityDown, removeProductFromCart, clearCart, addUser } = useActions()
 
+    const [isValid, setIsValid] = useState(false)
+    const [message, setMessage] = useState('')
+    const [userName, setUserName] = useState('')
+    const [userPhone, setUserPhone] = useState('')
+    const [userMail, setUserMail] = useState('')
+    const [userCompany, setUserCompany] = useState('')
+
+    const userInfo = {
+        userName: userName.trim().split(' ').map(item => item.slice(0, 1).toUpperCase() + item.slice(1).toLowerCase()).join(' '),
+        userPhone: userPhone,
+        userMail,
+        userCompany
+    }
+    const nameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.value === '' || /[А-ЯЁа-яе\s]/ig.test(e.target.value) && e.target.value.split(' ').length < 4) {
+            setUserName(e.target.value)
+        }
+    }
+
+    const checkValid = () => {
+        if (!userName.length || !userPhone.length || !userMail.length || !userCompany.length) {
+            setIsValid(false)
+        } else {
+            setIsValid(true)
+        }
+    }
+
+    const showMessage = (message: string) =>{
+        setMessage(message);
+        setTimeout(() => {
+            setMessage('')
+        }, 1500);
+    }
+
+    const submitHandler = (e: React.ChangeEvent<any>) => {
+        e.preventDefault();
+        checkValid()
+        if (isValid) {
+            addUser(userInfo)
+            if(!cart.length){
+                console.log("Корзина пуста")
+            } else {
+                console.log("Корзина: ", cart)
+            }
+            console.log("Данные пользователя: ", userInfo)
+        } else{
+            showMessage("Ошибка при заполнении данных, проверьте правильность ввода");
+        }
+    }
+
+
+    useEffect(() => {
+        checkValid();        
+    }, [userInfo])
 
     return (
         <div className={cl.cart}>
@@ -40,39 +93,85 @@ const Cart: React.FC = () => {
                             remove={removeProductFromCart}
                         />
                     })}
+                    {message && 
+                    <p className={cl.cart__message}>{message}</p>
+                    }
                 </div>
-                <form className={cl.cart__order}>
+                <form className={cl.cart__order} onSubmit={(e)=>{
+                    submitHandler(e)
+                }}>
                     <p className={cl['cart__order-text']}>Контактная информация</p>
                     <label className={cl.cart__label} >ФИО</label>
                     <div className={cl['cart__input-wrapper']}>
                         <img className={cl['cart__input-icon']} src={require('../images/icons/user-icon.png')} alt="" />
-                        <input placeholder='Ваше имя' className={cl.cart__input} type="text" />
+                        <input placeholder='Ваше имя'
+                            maxLength={50}
+                            minLength={10}
+                            required
+                            value={userName}
+                            onChange={(e) => { nameHandler(e) }}
+                            className={cl.cart__input} type="text" />
                     </div>
                     <div className={cl['cart__input-wrapper']}>
                         <img className={cl['cart__input-icon']} src={require('../images/icons/phone-icon.png')} alt="" />
-                        <input placeholder='Контактный телефон' className={cl.cart__input} type="text" />
+                        <input
+                            required
+                            minLength={9}
+                            maxLength={12}
+                            pattern={"[+]?[78][0-9]*"}
+                            placeholder='Контактный телефон'
+                            value={userPhone}
+                            onChange={(e) => {
+                                setUserPhone(e.target.value)
+                            }}
+                            className={cl.cart__input}
+                            type="tel" />
                     </div>
                     <div className={cl['cart__input-wrapper']}>
                         <img className={cl['cart__input-icon']} src={require('../images/icons/at-icon.png')} alt="" />
-                        <input placeholder='Email' className={cl.cart__input} type="email" />
+                        <input
+                            required
+                            maxLength={40}
+                            value={userMail}
+                            onChange={(e) => {
+                                setUserMail(e.target.value)
+                            }}
+                            placeholder='Email'
+                            className={cl.cart__input}
+                            type="email" />
                     </div>
                     <div className={cl['cart__input-wrapper']}>
                         <img className={cl['cart__input-icon']} src={require('../images/icons/case-icon.png')} alt="" />
-                        <input placeholder='Организация / ИНН' className={cl.cart__input} type="text" />
+                        <input
+                            required
+                            minLength={3}
+                            maxLength={60}
+                            value={userCompany}
+                            onChange={(e) => {
+                                setUserCompany(e.target.value)
+                            }}
+                            placeholder='Организация / ИНН'
+                            className={cl.cart__input}
+                            type="text" />
                     </div>
                     <div className={cl['cart__total']}>
                         <h3>Итого</h3>
                         <p>{totalPrice} руб.</p>
                     </div>
-                    <Button />
+                    <Button onSubmit={(e: React.ChangeEvent<any>) => {
+                        submitHandler(e)
+                    }} />
                     <a className={cl.cart__download} href='#' download={true}>
                         <img src={require('../images/icons/download-document.png')} alt="" />
                         Коммерческое предложение
                     </a>
                 </form>
-                <button 
-                className={cl.cart__clear}
-                onClick={()=>clearCart()}
+                <button
+                    className={cl.cart__clear}
+                    onClick={() => {
+                        clearCart()
+                        showMessage('Корзина успешно очищена!')
+                    }}
                 >
                     <img className={cl['cart__clear-icon']} src={require('../images/icons/trash.svg').default} alt="" />
                     Очистить корзину
@@ -84,3 +183,4 @@ const Cart: React.FC = () => {
 };
 
 export default Cart;
+
