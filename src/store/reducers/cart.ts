@@ -37,6 +37,7 @@ export const cartReducer = (state = initialState, action: CartAction): CartState
                             productGost: item.productGost,
                             productName: item.productName,
                             productType: item.productType,
+                            productImage: item.productImage,
                             productQty: item.productQty + action.up
                         }
                         return newItem
@@ -55,6 +56,7 @@ export const cartReducer = (state = initialState, action: CartAction): CartState
                             productGost: item.productGost,
                             productName: item.productName,
                             productType: item.productType,
+                            productImage: item.productImage,
                             productQty: item.productQty - action.down
                         }
                         return newItem

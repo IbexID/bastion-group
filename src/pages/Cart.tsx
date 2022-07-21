@@ -22,8 +22,8 @@ const Cart: React.FC = () => {
     const [userMail, setUserMail] = useState('')
     const [userCompany, setUserCompany] = useState('')
 
-    const makeName = (item: string)=>{
-        item.trim().split(' ').map(item => item.slice(0, 1).toUpperCase() + item.slice(1).toLowerCase()).join(' ');
+    const makeName = (item: string): string=>{
+        return item.trim().split(' ').map(item => item.slice(0, 1).toUpperCase() + item.slice(1).toLowerCase()).join(' ');
     }
 
     const userInfo = {
@@ -90,6 +90,7 @@ const Cart: React.FC = () => {
                             name={cartItem.productName}
                             qty={cartItem.productQty}
                             price={cartItem.productPrice}
+                            productImage={cartItem.productImage}
                             key={cartItem.productID}
                             id={cartItem.productID}
                             qtyUp={quantityUp}
@@ -160,7 +161,7 @@ const Cart: React.FC = () => {
                     </div>
                     <div className={cl['cart__total']}>
                         <h3>Итого</h3>
-                        <p>{totalPrice} руб.</p>
+                        <p className={cl['cart__total-price']}>{totalPrice.toLocaleString('ru')} руб.</p>
                     </div>
                     <Button onSubmit={(e: React.ChangeEvent<any>) => {
                         submitHandler(e)

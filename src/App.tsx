@@ -15,11 +15,12 @@ function App() {
 
   return (
     <div className="App">
-      <BrowserRouter  >
+      <BrowserRouter basename="/bastion-group" >
         <Header />
         <main>
 
           <Routes >
+            
             <Route path='/' element={<Index />} />
             <Route path='cart' element={<Cart />} />
             <Route path='producttypes' element={<ProductTypes />} />

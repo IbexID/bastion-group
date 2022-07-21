@@ -10,19 +10,23 @@ interface ICartItemProps {
     price: number;
     qty: number;
     id: number;
+    productImage?: string;
     qtyUp: Function;
     qtyDown: Function;
     remove: Function;
 
 }
 
-const CartItem: React.FC<ICartItemProps> = ({ id, gost, name, price, qty, qtyUp, qtyDown, remove }) => {
+const CartItem: React.FC<ICartItemProps> = ({ id, gost, name, price, qty, qtyUp, qtyDown, remove, productImage }) => {
 
     return qty===0
     ? <></>
     :(
         <div className={cl.cart__item}>
-            <img className={cl['cart__item-img']} src={require('../images/cart-item.png')} alt="" />
+            {productImage
+            ? <img className={cl['cart__item-img'] + ' ' + cl['cart__item-img--web']} src={productImage} alt="" />
+            : <img className={cl['cart__item-img']} src={require('../images/cart-item.png')} alt="" />
+            }
             <div className={cl['cart__item-description']}>
                 <p className={cl['cart__item-gost']}>{gost}</p>
                 <h5 className={cl['cart__item-name']}>{name}</h5>

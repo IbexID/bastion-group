@@ -14,15 +14,16 @@ const Products: React.FC = () => {
     const [message, setMessage] = useState('')
 
     const { types } = useTypedSelector(state => state.types);
+    const { products } = useTypedSelector(state => state.products);
+    const productIDs: string[] = products.map( item => String(item.productID))
 
-
-
+    
     const [productID, setProductID] = useState('')
     const [productName, setProductName] = useState('')
     const [productType, setProductType] = useState('')
     const [productPrice, setProductPrice] = useState('')
     const [productGost, setProductGost] = useState('')
-    const [productImage, setProductImage] = React.useState<File>()
+    const [productImage, setProductImage] = useState('')
     const { addProduct } = useActions();
     let productInfo = {
         productID: Number(productID),
@@ -61,7 +62,7 @@ const Products: React.FC = () => {
     }
     const checkValid = () => {
         const values = Object.values(productInfo)
-        setIsInputValid(values.every(value => value !== ''))
+        setIsInputValid(values.filter(item=>item!==productImage).every(value => value !== ''))
 
     }
     const clearInputs = () => {
@@ -69,7 +70,7 @@ const Products: React.FC = () => {
         setProductID('');
         setProductName('');
         setProductPrice('');
-        setProductImage(undefined);
+        setProductImage('');
     }
     const addProductInfo = (): void => {
         setInputMessage(false)
@@ -88,11 +89,16 @@ const Products: React.FC = () => {
     const buttonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         checkValid()
-        if (isInputValid) {
+        if(productIDs.includes(productID)){
+            showMessage('Ошибка! Такой идентификатор продукта уже существует')
+            setIsInputValid(false)
+
+        } else if  (isInputValid) {
             showMessage('Продукт успешно добавлен!')
             addProductInfo();
             clearInputs();
             setIsInputValid(false)
+
         } else {
             showMessage('Заполните все поля');
         }
@@ -172,14 +178,11 @@ const Products: React.FC = () => {
                     <label className={cl['products__form-label']} htmlFor="">Фото
                         <input
                             className={cl['products__form-input']}
-                            type="file"
-                            accept="image/*"
+                            type="url"
+                            placeholder='Ссылка на изображение товара (необязательно)'
+                            value={productImage}
                             onChange={(e) => {
-                                e.preventDefault();
-                                const { files } = e.target;
-                                console.log(files![0]);
-                                
-                                
+                                setProductImage(e.target.value)                                
                             }}
                         />
                     </label>

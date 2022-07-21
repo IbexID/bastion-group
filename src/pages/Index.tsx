@@ -10,14 +10,17 @@ import { ICartItem } from '../types/cart';
 
 const Index: React.FC = () => {
     const products: any[] = useTypedSelector(state => Object.entries(state.products)[0][1]);
+
     const maxProductPrice: number = Math.max(...products.map(product => product.productPrice))
     const gost: string[] = [...products.map(product => product.productGost)]
     const type: string[] = Array.from(new Set([...products.map(product => product.productType)]))
+
     const [minPrice, setMinPrice] = useState(Math.min(...products.map(product => product.productPrice), 0))
     const [maxPrice, setMaxPrice] = useState(Math.max(...products.map(product => product.productPrice), 1))
     const [gostFilter, setGostFilter] = useState<string[]>([])
     const [typeFilter, setTypeFilter] = useState<string[]>([])
     const [filteredProducts, setFilteredProducts] = useState(products)
+    
     const { addProductToCart, quantityUp } = useActions();
     
     
@@ -205,6 +208,7 @@ const Index: React.FC = () => {
                             key={i} 
                             title={item.productName} 
                             gost={item.productGost} 
+                            productImage={item.productImage}
                             add={()=>addToCart(item)} 
                             qtyUp={quantityUp} 
                             productID={item.productID}  

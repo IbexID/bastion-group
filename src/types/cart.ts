@@ -9,6 +9,7 @@ export interface ICartItem{
     productPrice: number;
     productGost: string;
     productType: string;
+    productImage: string;
     
 }
 export enum CartActionTypes  {

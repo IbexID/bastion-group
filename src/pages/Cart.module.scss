@@ -1,5 +1,6 @@
 .cart {
     margin-bottom: 107px;
+
     &__title {
         text-align: left;
         font-weight: 500;
@@ -83,6 +84,7 @@
         border-bottom: 1px solid rgba(230, 230, 230, 1);
         padding: 8px 0 8px 24px;
         margin-bottom: 25px;
+
         &::placeholder {
             color: rgba(179, 179, 179, 1);
             font-weight: 300;
@@ -99,6 +101,15 @@
         justify-content: space-between;
         width: 100%;
         margin-bottom: 21px;
+    }
+
+    &__total-price {
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 22px;
+        text-align: right;
+        letter-spacing: 1px;
+        color: #C93E33;
     }
 
     &__download {
@@ -134,7 +145,8 @@
     &__clear-icon {
         margin-right: 15px;
     }
-    &__message{
+
+    &__message {
         padding-top: 200px;
     }
 

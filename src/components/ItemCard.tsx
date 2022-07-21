@@ -12,6 +12,7 @@ interface ICardProps {
     title: string;
     price: number;
     productID: number;
+    productImage?: string;
     add: MouseEventHandler<HTMLButtonElement> 
     qtyUp: Function
 
@@ -34,8 +35,10 @@ const ItemCard: React.FC<ICardProps> = (props: ICardProps) => {
                 {isAction && <p className={cl.card__action}>акция</p>}
 
             </div>
-
-            <img className={cl.card__image} src={require('../images/card-item.png')} alt="" />
+            {props.productImage 
+            ? <img className={cl.card__image + ' ' + cl['card__image--web']} src={props.productImage} alt="" />
+            : <img className={cl.card__image} src={require('../images/card-item.png')} alt="" />
+}
 
             <p className={cl.card__gost}>{props.gost}</p>
             <h5 className={cl.card__title}>{props.title}</h5>

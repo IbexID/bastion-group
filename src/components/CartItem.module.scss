@@ -9,6 +9,11 @@
 
     &__item-img {
         margin: 0 25px 0 21px;
+        width: 120px;
+    }
+    &__item-img--web {
+        margin: 0 25px 0 21px;
+        max-height: 111px;
     }
     &__item-description{
         text-align: left;
@@ -69,6 +74,7 @@
         border-bottom: 1px solid rgba(230, 230, 230, 1);
     }
     &__item-sum{
+        width: 100px;
         font-weight: 700;
         font-size: 18px;
         line-height: 18px;
