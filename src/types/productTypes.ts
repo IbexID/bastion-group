@@ -1,6 +1,10 @@
 export interface ProductTypeState{
     types: any[];
 }
+export interface IProductType{
+    productTypeID: number;
+    productTypeName: string;
+}
 export enum ProductTypeActionTypes  {
     ADD_PRODUCT_TYPE= "ADD_PRODUCT_TYPE",
     ADD_PRODUCT_TYPE_SUCCESS = "ADD_PRODUCT_TYPE_SUCCESS",

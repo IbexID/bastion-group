@@ -10,9 +10,9 @@ interface ICartItemProps {
     price: number;
     qty: number;
     id: number;
-    qtyUp: any;
-    qtyDown: any;
-    remove: any;
+    qtyUp: Function;
+    qtyDown: Function;
+    remove: Function;
 
 }
 

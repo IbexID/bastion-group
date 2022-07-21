@@ -7,13 +7,13 @@ import Button from './ui/Button';
 import CartControls from './ui/CartControls';
 
 interface ICardProps {
-    item: any;
+    item: React.MouseEvent<HTMLButtonElement, MouseEvent>;
     gost: string;
     title: string;
     price: number;
     productID: number;
     add: MouseEventHandler<HTMLButtonElement> 
-    qtyUp: any
+    qtyUp: Function
 
 
 }
@@ -21,7 +21,7 @@ interface ICardProps {
 const ItemCard: React.FC<ICardProps> = (props: ICardProps) => {
     const isHit = props.title.includes('о')
     const isAction = props.title.includes('а')
-    const qtyInCart = useTypedSelector(state => state.cart.cart.map((item: any) => item.productID))
+    const qtyInCart = useTypedSelector(state => state.cart.cart.map((item => item.productID)))
     const item = props.item
 
     const [qtyValue, setQtyValue] = useState(1)
@@ -35,7 +35,7 @@ const ItemCard: React.FC<ICardProps> = (props: ICardProps) => {
 
             </div>
 
-            <img className={cl.card__image} src={require('../images/card-item.png')} onClick={props.qtyUp} alt="" />
+            <img className={cl.card__image} src={require('../images/card-item.png')} alt="" />
 
             <p className={cl.card__gost}>{props.gost}</p>
             <h5 className={cl.card__title}>{props.title}</h5>

@@ -7,7 +7,7 @@ import cl from './ProductTypes.module.scss'
 const ProductTypes: React.FC = () => {
     const { types } = useTypedSelector(state => state);
     const {addProductType} = useActions();
-    const typeNames = types.types.map( item => item.productTypeName)
+    const typeNames: string[] = types.types.map( item => item.productTypeName)
     
     const [isInputValid, setIsInputValid] = useState(false)
     const [message, setMessage] = useState('')

@@ -4,7 +4,7 @@ import CartItem from '../components/CartItem';
 import Button from '../components/ui/Button';
 import { useActions } from '../hooks/useActions';
 import { useTypedSelector } from '../hooks/useTypedSelector';
-import { CartState } from '../types/cart';
+import { CartState, ICartItem } from '../types/cart';
 import cl from './Cart.module.scss'
 
 
@@ -22,8 +22,12 @@ const Cart: React.FC = () => {
     const [userMail, setUserMail] = useState('')
     const [userCompany, setUserCompany] = useState('')
 
+    const makeName = (item: string)=>{
+        item.trim().split(' ').map(item => item.slice(0, 1).toUpperCase() + item.slice(1).toLowerCase()).join(' ');
+    }
+
     const userInfo = {
-        userName: userName.trim().split(' ').map(item => item.slice(0, 1).toUpperCase() + item.slice(1).toLowerCase()).join(' '),
+        userName: makeName(userName),
         userPhone: userPhone,
         userMail,
         userCompany
@@ -49,7 +53,7 @@ const Cart: React.FC = () => {
         }, 1500);
     }
 
-    const submitHandler = (e: React.ChangeEvent<any>) => {
+    const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         checkValid()
         if (isValid) {
@@ -79,7 +83,7 @@ const Cart: React.FC = () => {
                     <span><img className={cl['cart__warning-img']} src={require('../images/icons/warning.png')} alt="warning" /></span><p>Извините, но указанное  ранее количество товара недоступно. Установлено ближайшее доступное значение.</p></div>
                 <h3 className={cl['cart__subtitle']}>Заказ</h3>
                 <div className={cl.cart__items}>
-                    {cart && cart.map((cartItem: any) => {
+                    {cart && cart.map((cartItem: ICartItem) => {
 
                         return <CartItem
                             gost={cartItem.productGost}

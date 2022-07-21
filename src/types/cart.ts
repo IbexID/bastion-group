@@ -2,6 +2,15 @@ export interface CartState{
     
     cart: any[];
 }
+export interface ICartItem{
+    productQty: number;
+    productID: number;
+    productName: string;
+    productPrice: number;
+    productGost: string;
+    productType: string;
+    
+}
 export enum CartActionTypes  {
     ADD_PRODUCT_TO_CART= "ADD_PRODUCT_TO_CART",
     REMOVE_PRODUCT_FROM_CART = "REMOVE_PRODUCT_FROM_CART",

@@ -1,16 +1,16 @@
-import React, { ButtonHTMLAttributes, MouseEventHandler } from 'react';
+import React, { ButtonHTMLAttributes, FormEventHandler, MouseEventHandler } from 'react';
 import cl from './Button.module.scss'
 
 
 interface IButtonProps {
     cart?: boolean;
     moreInfo?: boolean;
-    qtyInCart?: any;
+    qtyInCart?: number;
     add?: MouseEventHandler<HTMLButtonElement> | undefined
     addMore?: MouseEventHandler<HTMLButtonElement> | undefined
     qtyUp?: MouseEventHandler<HTMLButtonElement> 
-    onClick?: any
-    onSubmit?: any
+    onClick?: FormEventHandler<HTMLButtonElement> | undefined
+    onSubmit?: FormEventHandler<HTMLButtonElement> | undefined
 }
 
 const Button: React.FC<IButtonProps> = (props: IButtonProps) => {
