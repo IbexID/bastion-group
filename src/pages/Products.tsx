@@ -10,7 +10,7 @@ const Products: React.FC = () => {
 
 
     const [isInputValid, setIsInputValid] = useState(false)
-    const [inputMessage, setInputMessage] = useState(false)
+    const [showInputMessage, setShowInputMessage] = useState(false)
     const [message, setMessage] = useState('')
 
     const { types } = useTypedSelector(state => state.types);
@@ -73,15 +73,15 @@ const Products: React.FC = () => {
         setProductImage('');
     }
     const addProductInfo = (): void => {
-        setInputMessage(false)
+        setShowInputMessage(false)
         addProduct(productInfo)
     }
     const showMessage = (message: string) => {
-        setInputMessage(true);
+        setShowInputMessage(true);
         setMessage(message);
         setTimeout(() => {
             setMessage('');
-            setInputMessage(false);
+            setShowInputMessage(false);
         }, 1500);
     }
 
