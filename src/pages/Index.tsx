@@ -7,9 +7,14 @@ import cl from './Index.module.scss'
 import { useTypedSelector } from '../hooks/useTypedSelector';
 import { useActions } from '../hooks/useActions';
 import { ICartItem } from '../types/cart';
+import OverlayCartItem from '../components/OverlayCartItem';
+import { cartReducer } from '../store/reducers/cart';
+import { ICartItemProps } from '../components/CartItem';
 
 const Index: React.FC = () => {
     const products: any[] = useTypedSelector(state => Object.entries(state.products)[0][1]);
+    const productsInCart: any[] = useTypedSelector(state => state.cart.cart);
+    const latestProductInCart: any = productsInCart[productsInCart.length-1]
 
     const maxProductPrice: number = Math.max(...products.map(product => product.productPrice))
     const gost: string[] = [...products.map(product => product.productGost)]
@@ -20,6 +25,7 @@ const Index: React.FC = () => {
     const [gostFilter, setGostFilter] = useState<string[]>([])
     const [typeFilter, setTypeFilter] = useState<string[]>([])
     const [filteredProducts, setFilteredProducts] = useState(products)
+    const [notification, setNotification] = useState(false)
     
     const { addProductToCart, quantityUp } = useActions();
     
@@ -27,6 +33,7 @@ const Index: React.FC = () => {
     
     
     const addToCart = (item: ICartItem) => {
+        setNotification(true)
         addProductToCart(item)
     }
    
@@ -53,16 +60,24 @@ const Index: React.FC = () => {
 
     }
 
-
-
     useEffect(() => {
         filterProducts()
+        
     }, [minPrice, maxPrice, gostFilter, typeFilter])
 
     return (
         <div className={cl.index}>
+            {notification &&
+                    <OverlayCartItem
+                    gost={latestProductInCart?.productGost}
+                    name={latestProductInCart?.productName}
+                    price={latestProductInCart?.productPrice}
+                    image={latestProductInCart?.productImage}
+                    close={()=>setNotification(false)}
+                    />}
             <Breadcrumbs />
             <div className={cl.index__top}>
+                
                 <h1 className={cl.index__title} >Главная</h1>
                 <div className={cl.index__sort}>
                     <p className={cl['index__sort-text']}>Сначала популярные</p>

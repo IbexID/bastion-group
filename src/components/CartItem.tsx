@@ -4,7 +4,7 @@ import { CartAction } from '../types/cart';
 import cl from './CartItem.module.scss'
 import CartControls from './ui/CartControls';
 
-interface ICartItemProps {
+export interface ICartItemProps {
     gost: string;
     name: string;
     price: number;
