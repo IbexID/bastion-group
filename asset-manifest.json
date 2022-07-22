@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/bastion-group/static/css/main.56bb6a23.css",
-    "main.js": "/bastion-group/static/js/main.b62d6f90.js",
+    "main.css": "/bastion-group/static/css/main.77da5529.css",
+    "main.js": "/bastion-group/static/js/main.d18564ab.js",
     "static/media/card-item.png": "/bastion-group/static/media/card-item.7d77e57ecbe36790c138.png",
     "static/media/cart-item.png": "/bastion-group/static/media/cart-item.43181359fa10f09106ab.png",
     "static/media/whatsapp.svg": "/bastion-group/static/media/whatsapp.5c91aa0d3541eba3c28b985996b3f968.svg",
@@ -18,11 +18,11 @@
     "static/media/mail-icon.svg": "/bastion-group/static/media/mail-icon.93199a4a489546d05aa6350a3db75dfb.svg",
     "static/media/input-arrow-icon.svg": "/bastion-group/static/media/input-arrow-icon.b4d40f3b2fa3011aa5078bc6c65f5acc.svg",
     "static/media/trash.svg": "/bastion-group/static/media/trash.465ea3c9d628874a83528f86d53bbd5a.svg",
-    "main.56bb6a23.css.map": "/bastion-group/static/css/main.56bb6a23.css.map",
-    "main.b62d6f90.js.map": "/bastion-group/static/js/main.b62d6f90.js.map"
+    "main.77da5529.css.map": "/bastion-group/static/css/main.77da5529.css.map",
+    "main.d18564ab.js.map": "/bastion-group/static/js/main.d18564ab.js.map"
   },
   "entrypoints": [
-    "static/css/main.56bb6a23.css",
-    "static/js/main.b62d6f90.js"
+    "static/css/main.77da5529.css",
+    "static/js/main.d18564ab.js"
   ]
 }
