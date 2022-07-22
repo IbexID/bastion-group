@@ -24,7 +24,15 @@ const CartItem: React.FC<ICartItemProps> = ({ id, gost, name, price, qty, qtyUp,
     :(
         <div className={cl.cart__item}>
             {productImage
-            ? <img className={cl['cart__item-img'] + ' ' + cl['cart__item-img--web']} src={productImage} alt="" />
+            ? <img 
+            className={cl['cart__item-img'] + ' ' + cl['cart__item-img--web']} 
+            src={productImage} 
+            onError={(e)=>{
+                e.currentTarget.setAttribute('src', `${require('../images/cart-item.png')}`)
+            }}
+            alt="" />
+
+
             : <img className={cl['cart__item-img']} src={require('../images/cart-item.png')} alt="" />
             }
             <div className={cl['cart__item-description']}>

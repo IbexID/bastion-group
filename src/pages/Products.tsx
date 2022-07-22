@@ -60,6 +60,7 @@ const Products: React.FC = () => {
             setProductGost(e.target.value.trim())
         }
     }
+   
     const checkValid = () => {
         const values = Object.values(productInfo)
         setIsInputValid(values.filter(item=>item!==productImage).every(value => value !== ''))
@@ -182,7 +183,7 @@ const Products: React.FC = () => {
                             placeholder='Ссылка на изображение товара (необязательно)'
                             value={productImage}
                             onChange={(e) => {
-                                setProductImage(e.target.value)                                
+                                setProductImage(e.target.value)                         
                             }}
                         />
                     </label>
